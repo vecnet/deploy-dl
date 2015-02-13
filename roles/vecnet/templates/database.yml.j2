@@ -1,12 +1,12 @@
-{{rails.env}}: &main
+{{ rails_env }}: &main
   adapter: postgresql
   encoding: utf8
   pool: 5
   timeout: 5000
-  host: localhost
-  database: vecnet_db
-  username: vecnet
-  password: vecnet
+  host: {{ db_hostname }}
+  database: {{ db_name }}
+  username: {{ db_user }}
+  password: {{ db_password }}
 
-{{rails.env}}_remote_purl_database:
+{{ rails_env }}_remote_purl_database:
   <<: *main

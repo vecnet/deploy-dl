@@ -3,7 +3,7 @@
   user: name=app
 
 - name: install packages
-  yum: name={{item}}
+  yum: name={{ item }}
   with_items:
     - ImageMagick
     - ImageMagick-devel
@@ -25,11 +25,12 @@
 # provisioning and deploying?
 
 - name: setup application directory layout
-  file: path={{deploy_root}}/{{item}}
-        state=directory
-        owner=app
-        group=app
-        mode=755
+  file: >
+    path={{ deploy_root }}/{{ item }}
+    state=directory
+    owner=app
+    group=app
+    mode=755
   with_items:
     - releases
     - shared
@@ -40,20 +41,20 @@
     - shared/system
 
 - name: check out code
-  git:
+  git: >
     repo="https://github.com/vecnet/geo-pilot.git"
-    dest={{deploy_root}}/shared/cached-copy
+    dest={{ deploy_root }}/shared/cached-copy
     force=yes
     recursive=no
     version=ansible
 
 - name: HEAD ref
   command: git rev-parse --verify HEAD
-    chdir={{deploy_root}}/shared/cached-copy
+    chdir={{ deploy_root }}/shared/cached-copy
   register: head_ref
 
 - name: See if directory exists
-  command: ls {{deploy_root}}/releases/{{head_ref.stdout}}
+  command: ls {{ deploy_root }}/releases/{{ head_ref.stdout }}
   register: deploy_exists
   ignore_errors: yes
 
@@ -68,15 +69,16 @@
   include: deploy.yml
   when: deploy_exists.rc != 0
   vars:
-    release_dir: "{{deploy_root}}/releases/{{head_ref.stdout}}"
+    release_dir: "{{ deploy_root }}/releases/{{ head_ref.stdout }}"
 
 - name: Fix permissions
-  file: path={{deploy_root}}
-        state=directory
-        owner=app
-        group=app
-        mode=755
-        recurse=yes
+  file: >
+    path={{ deploy_root }}
+    state=directory
+    owner=app
+    group=app
+    mode=755
+    recurse=yes
 
 
 - name: link current directory

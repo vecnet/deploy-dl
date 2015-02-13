@@ -1,4 +1,8 @@
 
 deploy_root: /opt/vecnet-geopilot
-rails:
-    env: development
+rails_env: development
+solr_service_addr: http://localhost:8081/solr
+db_hostname: localhost
+db_name: vecnet_db
+db_user: vecnet
+db_password: vecnet
