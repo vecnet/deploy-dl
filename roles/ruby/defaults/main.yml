@@ -1,0 +1,8 @@
+---
+# this is the newest patch of 2.0.0 supported by ruby-install v0.5.0
+ruby_version: 2.0.0-p353
+
+chruby_version: 0.3.4
+chruby_cache_url: https://dl.vecnet.org/i/chruby-{{ chruby_version }}.tar.gz
+# chruby_cache_url: https://github.com/postmodern/chruby/archive/v{{ chruby_version }}.tar.gz
+

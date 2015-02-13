@@ -1,0 +1,24 @@
+---
+
+# original way to install ruby using ruby-build
+#
+
+- name: clone ruby build
+  git: >
+    repo=https://github.com/sstephenson/ruby-build.git
+    dest=/opt/src/ruby-build
+    update=yes
+  sudo: yes
+
+- name: compile ruby build
+  command: >
+    ./install.sh
+    chdir=/opt/src/ruby-build
+    creates=/usr/local/bin/ruby-build
+  sudo: yes
+
+- name: compile ruby
+  command: >
+    /usr/local/bin/ruby-build {{ ruby_version }} /opt/rubies/{{ ruby_version }}
+    creates=/opt/rubies/{{ ruby_version }}/bin/ruby
+

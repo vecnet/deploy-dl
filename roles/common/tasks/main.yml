@@ -1,0 +1,13 @@
+---
+- name: create /opt/src
+  file: path=/opt/src
+        state=directory
+        mode=0777
+
+- include: packages.yml
+  sudo: true
+
+- include: ferm.yml
+
+
+# install ntp?

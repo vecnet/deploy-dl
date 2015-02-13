@@ -1,0 +1,118 @@
+
+- name: make app user
+  user: name=app
+
+- name: install packages
+  yum: name={{item}}
+  with_items:
+    - ImageMagick
+    - ImageMagick-devel
+    - clamav
+    - clamav-devel
+    - clamav-db
+    - postgresql-devel
+
+- name: install bundler
+  shell: su app -c "source /etc/profile.d/chruby.sh && chruby 2.0.0-p353 && gem install bundler"
+    chdir=/home/app
+    creates=/home/app/.gem/ruby/2.0.0/bin/bundle
+
+# capistrano-like directory layout
+# But not perfect, since the capistrano way is not idempotent
+#
+# This way isn't perfect either since the git checkout could return
+# different things each time...is the problem a difference between
+# provisioning and deploying?
+
+- name: setup application directory layout
+  file: path={{deploy_root}}/{{item}}
+        state=directory
+        owner=app
+        group=app
+        mode=755
+  with_items:
+    - releases
+    - shared
+    - shared/bundle
+    - shared/config
+    - shared/log
+    - shared/pids
+    - shared/system
+
+- name: check out code
+  git:
+    repo="https://github.com/vecnet/geo-pilot.git"
+    dest={{deploy_root}}/shared/cached-copy
+    force=yes
+    recursive=no
+    version=ansible
+
+- name: HEAD ref
+  command: git rev-parse --verify HEAD
+    chdir={{deploy_root}}/shared/cached-copy
+  register: head_ref
+
+- name: See if directory exists
+  command: ls {{deploy_root}}/releases/{{head_ref.stdout}}
+  register: deploy_exists
+  ignore_errors: yes
+
+#- name: Copy code to current repo
+#  command: cp -RPp {{deploy_root}}/shared/cached-copy {{deploy_root}}/current
+
+#- name: Run deploy script
+#  script: deploy.sh {{deploy_root}} {{deploy_root}}/releases/{{head_ref.stdout}} {{rails.env}}
+#  when: deploy_exists.rc != 0
+
+- name: Do deployment
+  include: deploy.yml
+  when: deploy_exists.rc != 0
+  vars:
+    release_dir: "{{deploy_root}}/releases/{{head_ref.stdout}}"
+
+- name: Fix permissions
+  file: path={{deploy_root}}
+        state=directory
+        owner=app
+        group=app
+        mode=755
+        recurse=yes
+
+
+- name: link current directory
+  file: src={{deploy_root}}/releases/{{head_ref.stdout}}
+      path={{deploy_root}}/current
+      state=link
+
+- name: restart unicorn
+  command: su app -c "{{deploy_root}}/current/script/reload-unicorn.sh"
+
+#- name: restart workers
+#  shell: su app -c "{{deploy_root}}/current/script/stop-pool.sh && {{deploy_root}}/current/script/start-pool.sh"
+#
+#
+# # executing `deploy:cleanup'
+# ls -1dt /home/app/vecnet/releases/* | tail -n +6 |  xargs rm -rf
+#
+
+
+#Copy public key into app user .ssh folder of whoever is going to deploy to that machine
+#Run cap ENV deploy:setup in dev machine
+# make /opt/vecnet-geopilot directory
+
+
+#- name: install log rotate
+#  copy: src=logrotata.d/vecnet
+#    dest=/etc/logrotate.d/vecnet
+#    owner=root
+#    group=root
+#    mode=644
+
+# init.d
+# run as root
+#sudo cp devops/etc/init.d/* /etc/init.d
+#sudo chkconfig --add vecnet-server
+#sudo chkconfig --add vecnet-worker-pool
+#sudo chkconfig vecnet-server on
+#sudo chkconfig vecnet-worker-pool on
+

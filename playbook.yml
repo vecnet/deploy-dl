@@ -1,0 +1,36 @@
+---
+- name: Install main
+  hosts:
+    - main
+  sudo: yes
+  roles:
+    - common
+    #    - postgres
+    # - redis
+      #    - tomcat
+      #    - solr
+      #    - nginx
+      #    - role: vecnet
+      #      rails:
+      #        env: production
+      #
+
+- name: Install workers
+  hosts:
+    - workers
+  sudo: yes
+  roles:
+      - common
+      - fits
+      - ruby
+      #    - role: vecnet
+      #      rails:
+      #        env: production
+
+
+#- name: Install geoserver
+#  hosts: geoserver
+#  sudo: yes
+#  roles:
+#    - common
+#    - geosuite

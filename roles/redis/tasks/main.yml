@@ -1,0 +1,24 @@
+---
+- name: Install packages
+  sudo: yes
+  yum: >
+    name=redis
+    state=present
+
+- name: Start redis
+  sudo: yes
+  service: >
+    name=redis
+    enabled=yes
+    state=started
+
+- name: open redis in firewall
+  sudo: yes
+  copy: >
+    src=redis.ferm
+    dest=/etc/ferm/ferm.d/redis.ferm
+    owner=root group=root mode=0700
+  notify:
+    - run ferm
+  when: open_redis_port
+

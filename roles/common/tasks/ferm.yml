@@ -1,0 +1,25 @@
+---
+- name: Add ferm config directory
+  file: >
+    path=/etc/ferm
+    state=directory
+    owner=root group=root mode=0700
+
+- name: Add ferm config directory for additional config files
+  file: >
+    path=/etc/ferm/ferm.d
+    state=directory
+    owner=root group=root mode=0700
+
+- name: Copy ferm config
+  copy: >
+    src=ferm.conf
+    dest=/etc/ferm/ferm.conf
+    owner=root group=root mode=0700
+  notify:
+    - run ferm
+
+- name: create /opt/src
+  file: path=/opt/src
+        state=directory
+

@@ -1,0 +1,8 @@
+[main]
+dl-vecnet.crc.nd.edu
+
+[workers]
+dl-vecnet-w1.crc.nd.edu
+
+[geoserver]
+vecnet-geoserver.crc.nd.edu

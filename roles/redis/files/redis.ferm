@@ -1,0 +1,3 @@
+
+# open redis
+protocol tcp saddr $NET_TRUSTED dport 6379 mod state state NEW ACCEPT;

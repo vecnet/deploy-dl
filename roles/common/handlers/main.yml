@@ -1,0 +1,3 @@
+---
+- name: run ferm
+  shell: /usr/sbin/ferm /etc/ferm/ferm.conf && /sbin/service iptables save

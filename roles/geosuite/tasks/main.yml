@@ -1,0 +1,48 @@
+# TODO: this file needs to change between rhel and centos...
+- name: Setup OpenGeo yum repo
+  template: src=OpenGeo.repo.j2
+    dest=/etc/yum.repos.d/OpenGeo.repo
+    owner=root
+    group=root
+    mode=644
+
+- name: Install packages
+  sudo: yes
+  yum: name={{item}}
+       state=installed
+  with_items:
+    - opengeo
+    - nginx
+    - geoserver-gdal
+
+- name: Adjust Java config
+  changelineinconfig:
+    source=/etc/tomcat6/tomcat6.conf
+    line="JAVA_OPTS="-Xmx3536M""
+
+- name: change proxy address
+  geoserver should use proxy address of "http://geo.vecnet.org/geoserver/"
+
+- name: remove default nginx configuration
+  file: path=/etc/nginx/conf.d/default.conf
+        state=absent
+  notify: reload nginx
+
+- name: set up nginx proxy
+  sudo: yes
+  template: src={{item}}.j2
+    dest=/etc/nginx/{{item}}
+    owner=root
+    group=root
+    mode=644
+  with_items:
+    - nginx.conf
+    - conf.d/geosuite.conf
+  notify: reload nginx
+
+- name: start nginx
+  service: name=nginx
+           enabled=yes
+           state=started
+
+# TODO: set up ntp service

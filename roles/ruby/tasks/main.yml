@@ -1,0 +1,52 @@
+- name: ruby dependencies
+  yum: name={{ item }}
+       state=present
+  with_items:
+    - gcc-c++
+    - git
+    - glibc-devel
+    - glibc-headers
+    - libyaml-devel
+    - openssl-devel
+    - readline
+    - readline-devel
+    - zlib
+    - zlib-devel
+
+- name: make ruby directory
+  file: >
+    path=/opt/rubies
+    state=directory
+    owner=root
+    group=root
+  sudo: yes
+
+- name: download chruby
+  get_url: >
+    url={{ chruby_cache_url }}
+    dest=/opt/src/chruby-{{ chruby_version }}.tar.gz
+
+- name: expand chruby
+  unarchive: >
+    src=/opt/src/chruby-{{ chruby_version }}.tar.gz
+    dest=/opt/src
+    copy=no
+    owner=root
+    group=root
+    creates=/opt/src/chruby-{{ chruby_version }}/Makefile
+
+- name: compile chruby
+  command: >
+    make install
+    chdir=/opt/src/chruby-{{ chruby_version }}
+    creates=/usr/local/share/chruby/chruby.sh
+
+- name: install chruby profile
+  copy: >
+    src=chruby.sh
+    dest=/etc/profile.d/chruby.sh
+    mode=644
+
+- include: ruby_install.yml
+#- include: ruby_build.yml
+
