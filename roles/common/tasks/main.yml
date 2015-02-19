@@ -1,13 +1,22 @@
 ---
-- name: create /opt/src
-  file: path=/opt/src
-        state=directory
-        mode=0777
+- name: create /opt hierarchy
+  file: >
+    path=/opt/{{ item }}
+    state=directory
+    mode=0777
+  with_items:
+    - src
+    - pkg
+
+- name: create /opt/secrets
+  file: >
+    path=/opt/secrets
+    state=directory
+    mode=0744
 
 - include: packages.yml
   sudo: true
 
 - include: ferm.yml
-
 
 # install ntp?

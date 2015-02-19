@@ -3,7 +3,7 @@
   sudo: yes
   yum: >
     name=log4j
-    state=installed
+    state=present
 
 - name: Check variable solr_version is set
   fail: msg="Please set 'solr_version' variable in the playbook"
@@ -12,7 +12,7 @@
 - name: Download Solr
   get_url: >
     url={{ solr_cache_url }}/solr-{{ solr_version }}.tgz
-    dest=/opt/src/solr-{{ solr_version }}.tgz
+    dest=/opt/pkg/solr-{{ solr_version }}.tgz
     owner=tomcat
     group=tomcat
   sudo: yes
@@ -31,7 +31,7 @@
 
 - name: Unpack SOLR
   unarchive: >
-    src=/opt/src/solr-{{ solr_version }}.tgz
+    src=/opt/pkg/solr-{{ solr_version }}.tgz
     dest=/opt/src
     creates=/opt/src/solr-{{ solr_version }}/dist/solr-{{ solr_version }}.war
     copy=no
@@ -42,7 +42,7 @@
 - name: Copy solr.war into place
   command: >
     cp /opt/src/solr-{{ solr_version }}/dist/solr-{{ solr_version }}.war
-    /opt/solr/solr-{{solr_version}}.war
+    /opt/solr/solr-{{ solr_version }}.war
     creates=/opt/solr/solr-{{ solr_version }}.war
   sudo: yes
 
@@ -50,7 +50,7 @@
   command: >
     cp /opt/src/solr-{{ solr_version }}/{{ item }}
     /opt/solr/lib
-    creates=/opt/solr/lib/{{item | basename}}
+    creates=/opt/solr/lib/{{ item | basename }}
   sudo: yes
   with_items:
     - dist/solr-analysis-extras-{{solr_version}}.jar
@@ -100,10 +100,6 @@
     owner=tomcat
     group=tomcat
 
-#
-# setup vecnet core
-#
-
 - name: Install solr configuration
   sudo: yes
   template: >
@@ -111,6 +107,10 @@
     dest=/opt/solr/solr.xml
     owner=tomcat
     group=tomcat
+
+#
+# setup vecnet core
+#
 
 - name: Setup vecnet directory
   file: >
@@ -124,6 +124,33 @@
   copy: >
     src={{ item }}
     dest=/opt/solr/vecnet/conf/{{ item }}
+    owner=tomcat
+    group=tomcat
+    mode=644
+  sudo: yes
+  with_items:
+    - protwords.txt
+    - schema.xml
+    - solrconfig.xml
+    - stopwords_en.txt
+    - synonyms.txt
+
+#
+# setup discovery core
+#
+
+- name: Setup discovery directory
+  file: >
+    path=/opt/solr/discovery/conf
+    state=directory
+    owner=tomcat
+    group=tomcat
+  sudo: yes
+
+- name: Copy discovery solr config
+  copy: >
+    src={{ item }}
+    dest=/opt/solr/discovery/conf/{{ item }}
     owner=tomcat
     group=tomcat
     mode=644

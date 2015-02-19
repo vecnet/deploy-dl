@@ -1,17 +1,13 @@
-
+---
+# this is mostly identical to the "vecnet" role, which deploys the backend application
 - name: make app user
   user: name=app
 
 - name: install packages
   yum: >
     name={{ item }}
-    ensure=present
+    state=present
   with_items:
-    - ImageMagick
-    - ImageMagick-devel
-    - clamav
-    - clamav-devel
-    - clamav-db
     - postgresql-devel
 
 - name: install bundler
@@ -29,7 +25,7 @@
 
 - name: setup application directory layout
   file: >
-    path={{ deploy_root }}/{{ item }}
+    path={{ discovery_deploy_root }}/{{ item }}
     state=directory
     owner=app
     group=app
@@ -45,38 +41,31 @@
 
 - name: check out code
   git: >
-    repo="https://github.com/vecnet/geo-pilot.git"
-    dest={{ deploy_root }}/shared/cached-copy
+    repo="https://github.com/vecnet/dl-discovery.git"
+    dest={{ discovery_deploy_root }}/shared/cached-copy
     force=yes
     recursive=no
-    version=ansible
+    version={{ discovery_branch|d('master') }}
 
 - name: HEAD ref
   command: git rev-parse --verify HEAD
-    chdir={{ deploy_root }}/shared/cached-copy
+    chdir={{ discovery_deploy_root }}/shared/cached-copy
   register: head_ref
 
 - name: See if directory exists
-  command: ls {{ deploy_root }}/releases/{{ head_ref.stdout }}
+  command: ls {{ discovery_deploy_root }}/releases/{{ head_ref.stdout }}
   register: deploy_exists
   ignore_errors: yes
-
-#- name: Copy code to current repo
-#  command: cp -RPp {{deploy_root}}/shared/cached-copy {{deploy_root}}/current
-
-#- name: Run deploy script
-#  script: deploy.sh {{deploy_root}} {{deploy_root}}/releases/{{head_ref.stdout}} {{rails.env}}
-#  when: deploy_exists.rc != 0
 
 - name: Do deployment
   include: deploy.yml
   when: deploy_exists.rc != 0
   vars:
-    release_dir: "{{ deploy_root }}/releases/{{ head_ref.stdout }}"
+    release_dir: "{{ discovery_deploy_root }}/releases/{{ head_ref.stdout }}"
 
 - name: Fix permissions
   file: >
-    path={{ deploy_root }}
+    path={{ discovery_deploy_root }}
     state=directory
     owner=app
     group=app
@@ -85,34 +74,25 @@
 
 - name: link current directory
   file: >
-    src={{ deploy_root }}/releases/{{ head_ref.stdout }}
-    path={{ deploy_root }}/current
+    src={{ discovery_deploy_root }}/releases/{{ head_ref.stdout }}
+    path={{ discovery_deploy_root }}/current
     state=link
 
 - name: restart unicorn
-  command: su app -c "{{ deploy_root }}/current/script/reload-unicorn.sh"
-
-#- name: restart workers
-#  shell: su app -c "{{deploy_root}}/current/script/stop-pool.sh && {{deploy_root}}/current/script/start-pool.sh"
-#
-
-#Copy public key into app user .ssh folder of whoever is going to deploy to that machine
-#Run cap ENV deploy:setup in dev machine
-# make /opt/vecnet-geopilot directory
+  command: su app -c "{{ discovery_deploy_root }}/current/script/reload-unicorn.sh"
 
 
-#- name: install log rotate
-#  copy: src=logrotata.d/vecnet
-#    dest=/etc/logrotate.d/vecnet
-#    owner=root
-#    group=root
-#    mode=644
+- name: install log rotate
+  template: >
+    src=logrotate.j2
+    dest=/etc/logrotate.d/vecnet
+    owner=root
+    group=root
+    mode=644
 
 # init.d
 # run as root
 #sudo cp devops/etc/init.d/* /etc/init.d
 #sudo chkconfig --add vecnet-server
-#sudo chkconfig --add vecnet-worker-pool
 #sudo chkconfig vecnet-server on
-#sudo chkconfig vecnet-worker-pool on
 

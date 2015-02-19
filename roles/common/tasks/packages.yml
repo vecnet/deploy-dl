@@ -1,10 +1,10 @@
 ---
 - name: copy epel rpm file
   copy: src=epel-release-6-8.noarch.rpm
-        dest=/opt/src/epel-release-6-8.noarch.rpm
+        dest=/opt/pkg/epel-release-6-8.noarch.rpm
 
 - name: install epel rpm
-  yum:  name=/opt/src/epel-release-6-8.noarch.rpm
+  yum:  name=/opt/pkg/epel-release-6-8.noarch.rpm
         state=present
 
 # it looks like the https EPEL repo uses SSL3.0, which
@@ -30,5 +30,6 @@
    - htop
    - tmux
    - ferm
+   - tree
    - vim
 

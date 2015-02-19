@@ -2,11 +2,11 @@
 - name: download fits
   get_url: >
     url={{ fits_cache_url }}/fits-{{fits_version}}.zip
-    dest=/opt/src/fits-{{fits_version}}.zip
+    dest=/opt/pkg/fits-{{fits_version}}.zip
 
 - name: expand fits
   unarchive: >
-    src=/opt/src/fits-{{fits_version}}.zip
+    src=/opt/pkg/fits-{{fits_version}}.zip
     dest=/opt/src
     copy=no
     owner=root

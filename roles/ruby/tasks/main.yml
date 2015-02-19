@@ -24,11 +24,11 @@
 - name: download chruby
   get_url: >
     url={{ chruby_cache_url }}
-    dest=/opt/src/chruby-{{ chruby_version }}.tar.gz
+    dest=/opt/pkg/chruby-{{ chruby_version }}.tar.gz
 
 - name: expand chruby
   unarchive: >
-    src=/opt/src/chruby-{{ chruby_version }}.tar.gz
+    src=/opt/pkg/chruby-{{ chruby_version }}.tar.gz
     dest=/opt/src
     copy=no
     owner=root

@@ -30,6 +30,7 @@
   -->
   <cores adminPath="/admin/cores" host="${host:}" hostPort="${jetty.port:8983}" hostContext="${hostContext:solr}">
     <core name="vecnet" instanceDir="vecnet" />
+    <core name="discovery" instanceDir="discovery" />
 
     <shardHandlerFactory name="shardHandlerFactory" class="HttpShardHandlerFactory">
       <str name="urlScheme">${urlScheme:}</str>

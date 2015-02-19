@@ -1,6 +1,6 @@
 #
 # Variables used here
-#   deploy_root - path to where to put code
+#   discovery_deploy_root - path to where to put code
 #   release_dir - the directory for the new release
 #
 #
@@ -19,7 +19,7 @@
 #    ln -s -- /home/app/vecnet/shared/pids /home/app/vecnet/releases/20141124164147/tmp/pids
 
 - name: copy code to directory
-  command: cp -RPp {{ deploy_root }}/shared/cached-copy {{ release_dir }}
+  command: cp -RPp {{ discovery_deploy_root }}/shared/cached-copy {{ release_dir }}
 
 - name: fix permissions on {{ release_dir }}
   file: >
@@ -40,9 +40,10 @@
 
 - name: link in the shared directories
   file: >
-    src={{ deploy_root }}/shared/{{ item.src }}
+    src={{ discovery_deploy_root }}/shared/{{ item.src }}
     path={{ release_dir }}/{{ item.target }}
     state=link
+    force=yes
   with_items:
       - { src: system,  target: public/system }
       - { src: log,     target: log }
@@ -59,7 +60,7 @@
 - name: bundle install
   shell: su app -c "source /etc/profile.d/chruby.sh
     && chruby 2.0.0-p353
-    && exec bundle install --gemfile {{ release_dir }}/Gemfile --path {{ deploy_root }}/shared/bundle --deployment --without development test"
+    && exec bundle install --gemfile {{ release_dir }}/Gemfile --path {{ discovery_deploy_root }}/shared/bundle --deployment --without \"development test\""
     chdir={{ release_dir }}
 
 
@@ -89,7 +90,7 @@
 
 - name: only keep last 6 deploys
   shell: >
-      ls -1dt {{ deploy_root }}/releases/* | tail -n +6 |  xargs rm -rf
-      chdir={{ deploy_root }}/releases
+      ls -1dt {{ discovery_deploy_root }}/releases/* | tail -n +6 |  xargs rm -rf
+      chdir={{ discovery_deploy_root }}/releases
 
 

@@ -1,40 +1,61 @@
 ---
-- name: Install packages
+- name: Install postgres packages
   sudo: yes
-  yum: name={{ item }}
-       state=installed
+  yum: >
+    name={{ item }}
+    state=present
   with_items:
-   - python-psycopg2
-   - postgresql-server
-   - postgresql
+    - python-psycopg2
+    - postgresql-server
+    - postgresql
 
 - name: Init postgresql
   sudo: yes
-  command: service postgresql initdb
-           creates=/var/lib/pgsql/data/postgresql.conf
+  command: >
+    service postgresql initdb
+    creates=/var/lib/pgsql/data/postgresql.conf
 
 - name: Update pg_hba.conf
   sudo: yes
-  copy: src=pg_hba.conf
-        dest=/var/lib/pgsql/data/pg_hba.conf
-        owner=postgres
-        group=postgres
-        mode=0640
+  copy: >
+    src=pg_hba.conf
+    dest=/var/lib/pgsql/data/pg_hba.conf
+    owner=postgres
+    group=postgres
+    mode=0640
   notify:
     - reload postgresql
 
 - name: Start postgresql
   sudo: yes
-  service: name=postgresql
-           enabled=yes
-           state=started
+  service: >
+    name=postgresql
+    enabled=yes
+    state=started
 
 - name: Add vecnet database
   postgresql_db: name=vecnet_db
 
+- name: Add discovery database
+  postgresql_db: name=discovery_db
+
 - name: Add vecnet db user
   sudo: yes
-  postgresql_user: db=vecnet_db name=vecnet encrypted=yes password=md586655461c3f6f1054157d24eeeeccbf7 priv=ALL
+  postgresql_user: >
+    db=vecnet_db
+    name=vecnet
+    encrypted=yes
+    password=md5{{ vecnet_db_pass_md5 }}
+    priv=ALL
+
+- name: Add discovery db user
+  sudo: yes
+  postgresql_user: >
+    db=discovery_db
+    name=discovery
+    encrypted=yes
+    password=md5{{ discovery_db_pass_md5 }}
+    priv=ALL
 
 - name: Make fedora database
   sudo: yes
@@ -42,5 +63,10 @@
 
 - name: Make fedora user
   sudo: yes
-  postgresql_user: db=fedora name=fedora encrypted=yes password=md5c2bbdf29f656955b46e2f349414ba9d4 priv=ALL
+  postgresql_user: >
+    db=fedora
+    name=fedora
+    encrypted=yes
+    password=md5{{ fedora_db_pass_md5 }}
+    priv=ALL
 

@@ -5,8 +5,8 @@
   sudo: yes
   roles:
     - common
-    #    - postgres
-    # - redis
+    - postgres
+    - redis
       #    - tomcat
       #    - solr
       #    - nginx
@@ -28,6 +28,24 @@
       #        env: production
 
 
+- name: Install standalone
+  hosts:
+    - standalone
+  sudo: yes
+  roles:
+      - common
+      - postgres
+      - tomcat
+      - solr
+      - nginx
+      - fits
+      - ruby
+      - discovery
+
+# The geosuite role needs some adjustement
+# to configure the geoserver (it needs to
+# change the redirect address and port)
+#
 #- name: Install geoserver
 #  hosts: geoserver
 #  sudo: yes

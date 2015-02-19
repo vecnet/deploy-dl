@@ -40,6 +40,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     'dl'         => '192.168.33.10',
     'w1'         => '192.168.33.11',
     'geoserver'  => '192.168.33.12',
+    'sa'         => '192.168.33.13',
   }.each do |short_name, ip|
     config.vm.define short_name do |host|
       host.vm.network 'private_network', ip: ip

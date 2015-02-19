@@ -1,0 +1,9 @@
+{{ rails_env }}: &main
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  timeout: 5000
+  host: {{ db_hostname }}
+  database: discovery_db
+  username: discovery
+  password: {{ discovery_db_pass }}
