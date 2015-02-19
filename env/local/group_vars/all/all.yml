@@ -5,6 +5,8 @@ ansible_ssh_user: vagrant
 discovery_branch: jcu-deploy
 rails_env: jcu
 
+discovery_rails_secret_key: "{{ vault_discovery_rails_secret_key }}"
+
 # postgres password for the repository application
 vecnet_db_pass: "{{ vault_vecnet_db_pass }}"
 vecnet_db_pass_md5: "{{ vault_vecnet_db_pass_md5 }}"
