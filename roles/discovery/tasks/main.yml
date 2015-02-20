@@ -59,7 +59,7 @@
 
 - name: Do deployment
   include: deploy.yml
-  when: deploy_exists.rc != 0
+  #when: deploy_exists.rc != 0
   vars:
     release_dir: "{{ discovery_deploy_root }}/releases/{{ head_ref.stdout }}"
 

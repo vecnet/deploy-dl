@@ -1,12 +1,11 @@
 upstream vecnet {
     server 127.0.0.1:3000;
-    # server unix:/tmp/vecnet.sock.0;
 }
 upstream disadis {
     server 127.0.0.1:4000;
 }
 upstream discovery {
-    server 127.0.0.1:3001;
+    server 127.0.0.1:5000;
 }
 server {
     listen 80 default_server;
@@ -27,7 +26,7 @@ server {
 {% endif %}
 
     client_max_body_size 1G;
-    root /opt/vecnet-geopilot/current/public;
+    root /opt/vecnet-discovery/current/public;
     location ^~ /assets/ {
         gzip on;
         gzip_static on;
@@ -37,19 +36,23 @@ server {
         break;
     }
 
+    location /robots.txt {
+        root /opt/robots;
+        try_files $uri /robots.txt =404;
+    }
+
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
 
-    location ^~ /downloads/ {
-        proxy_intercept_errors on;
-        error_page 401 403 404 500 = @app;
-        proxy_redirect off;
-        proxy_buffering off;
-        #proxy_pass http://127.0.0.1:4000/;
-        proxy_pass http://disadis/;
-    }
+#    location ^~ /downloads/ {
+#        proxy_intercept_errors on;
+#        error_page 401 403 404 500 = @app;
+#        proxy_redirect off;
+#        proxy_buffering off;
+#        proxy_pass http://disadis/;
+#    }
 
     try_files $uri @app;
 

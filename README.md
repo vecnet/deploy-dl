@@ -22,7 +22,7 @@ If you have vagrant installed, you can create VMs using it and run ansible with 
 For example
 
     $ vagrant up
-    $ ansible-playbook playbook.yml -i env/local/inventory
+    $ ansible-playbook playbook.yml -i env/local/inventory --ask-vault-pass
 
 ## Deployment
 
@@ -30,9 +30,9 @@ To deploy to an environment you need to have your public ssh key installed on th
 
 Then to provision the QA environment run the following
 
-    $ ansible-playbook playbook.yml -i env/qa/inventory
+    $ ansible-playbook playbook.yml -i env/qa/inventory --ask-vault-pass
 
 To deploy to production
 
-    $ ansible-playbook deploy.yml -i env/production/inventory
+    $ ansible-playbook deploy.yml -i env/production/inventory --ask-vault-pass
 

@@ -19,7 +19,3 @@
   notify:
     - run ferm
 
-- name: create /opt/src
-  file: path=/opt/src
-        state=directory
-

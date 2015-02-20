@@ -38,7 +38,7 @@ http {
 
     gzip  on;
 
-    {% if rails_env != "production" %}
+    {% if restrict_access %}
     # restrict access to vpn
     allow 10.0.0.0/8;
     allow 172.17.0.0/17;

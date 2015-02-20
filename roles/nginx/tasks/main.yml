@@ -1,9 +1,4 @@
-- name: add nginx yum repo
-  copy: >
-    src=nginx.repo
-    dest=/etc/yum.repos.d/nginx.repo
-    mode=644
-
+---
 - name: install nginx
   yum: name=nginx
 
@@ -15,8 +10,8 @@
 
 - name: add vecnet configuration
   template: >
-    src={{item}}.j2
-    dest=/etc/nginx/{{item}}
+    src={{ item }}.j2
+    dest=/etc/nginx/{{ item }}
     owner=nginx
     group=nginx
   with_items:
@@ -24,6 +19,21 @@
     - conf.d/vecnet.conf
     - nginx.conf
   notify: reload nginx
+
+- name: make robots dir
+  file: >
+    path=/opt/robots
+    owner=nginx
+    group=nginx
+    mode=554
+    state=directory
+
+- name: copy robots.txt
+  template: >
+    src=robots.txt.j2
+    dest=/opt/robots/robots.txt
+    owner=nginx
+    group=nginx
 
 - name: start nginx
   service: >
