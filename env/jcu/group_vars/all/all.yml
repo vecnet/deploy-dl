@@ -1,0 +1,23 @@
+---
+open_redis_port: false
+ansible_ssh_user: ec2-user
+
+discovery_branch: jcu-deploy
+rails_env: jcu
+
+discovery_rails_secret_key: "{{ vault_discovery_rails_secret_key }}"
+
+use_ssl: false
+restrict_access: false
+
+# postgres password for the repository application
+vecnet_db_pass: "{{ vault_vecnet_db_pass }}"
+vecnet_db_pass_md5: "{{ vault_vecnet_db_pass_md5 }}"
+
+# postgres password for the discovery application
+discovery_db_pass: "{{ vault_discovery_db_pass }}"
+discovery_db_pass_md5: "{{ vault_discovery_db_pass_md5 }}"
+
+# postgres password for fedora
+fedora_db_pass: "{{ vault_fedora_db_pass }}"
+fedora_db_pass_md5: "{{ vault_fedora_db_pass_md5 }}"
