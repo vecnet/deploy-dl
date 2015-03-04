@@ -1,0 +1,28 @@
+#Install Options
+#Wed Sep 05 20:37:54 EDT 2012
+ri.enabled=false
+messaging.enabled=false
+apia.auth.required=false
+database.jdbcDriverClass=org.postgresql.Driver
+database.postgresql.jdbcDriverClass=org.postgresql.Driver
+upstream.auth.enabled=false
+ssl.available=false
+database.jdbcURL=jdbc\:postgresql\://localhost/fedora3
+database.password={{ fedora_db_pass }}
+database.username=fedora
+fesl.authz.enabled=false
+database.postgresql.driver=included
+deploy.local.services=true
+xacml.enabled=false
+fedora.serverHost={{ domain }}
+database=postgresql
+database.driver=included
+fedora.serverContext=fedora
+# also configure akubra
+llstore.type=akubra-fs
+fesl.authn.enabled=false
+fedora.home=/opt/fedora
+install.type=custom
+database.postgresql.jdbcURL=jdbc\:postgresql\://localhost/fedora3
+servlet.engine=other
+fedora.admin.pass={{ fedora_admin_password }}

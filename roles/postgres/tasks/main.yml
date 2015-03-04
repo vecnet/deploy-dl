@@ -59,12 +59,12 @@
 
 - name: Make fedora database
   sudo: yes
-  postgresql_db: name=fedora
+  postgresql_db: name=fedora3
 
 - name: Make fedora user
   sudo: yes
   postgresql_user: >
-    db=fedora
+    db=fedora3
     name=fedora
     encrypted=yes
     password=md5{{ fedora_db_pass_md5 }}

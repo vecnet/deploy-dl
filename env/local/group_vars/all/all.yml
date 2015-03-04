@@ -10,6 +10,8 @@ discovery_rails_secret_key: "{{ vault_discovery_rails_secret_key }}"
 use_ssl: false
 restrict_access: false
 
+fedora_admin_password: "{{ vault_fedora_admin_password }}"
+
 # postgres password for the repository application
 vecnet_db_pass: "{{ vault_vecnet_db_pass }}"
 vecnet_db_pass_md5: "{{ vault_vecnet_db_pass_md5 }}"

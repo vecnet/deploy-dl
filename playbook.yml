@@ -7,12 +7,17 @@
     - common
     - postgres
     - redis
-      #    - tomcat
-      #    - solr
-      #    - nginx
-      #    - role: vecnet
-      #      rails:
-      #        env: production
+      #- tomcat
+      #- solr
+      #- nginx
+      #- discovery
+      #- vecnet
+      #
+      # - fedora?
+      # - disadis
+      # - noids
+      # - runit
+      # - backup rsync
       #
 
 - name: Install workers
@@ -23,10 +28,7 @@
       - common
       - fits
       - ruby
-      #    - role: vecnet
-      #      rails:
-      #        env: production
-
+      #- vecnet
 
 - name: Install standalone
   hosts:
@@ -37,6 +39,7 @@
       - postgres
       - tomcat
       - solr
+      - fedora
       - nginx
       - fits
       - ruby
