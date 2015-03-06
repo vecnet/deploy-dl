@@ -1,22 +1,22 @@
 ---
 - name: download fits
   get_url: >
-    url={{ fits_cache_url }}/fits-{{fits_version}}.zip
-    dest=/opt/pkg/fits-{{fits_version}}.zip
+    url={{ fits_cache_url }}/fits-{{ fits_version }}.zip
+    dest=/opt/pkg/fits-{{ fits_version }}.zip
 
 - name: expand fits
   unarchive: >
-    src=/opt/pkg/fits-{{fits_version}}.zip
+    src=/opt/pkg/fits-{{ fits_version }}.zip
     dest=/opt/src
     copy=no
     owner=root
     group=root
-    creates=/opt/src/fits-{{fits_version}}/fits.sh
+    creates=/opt/src/fits-{{ fits_version }}/fits.sh
   sudo: yes
 
 - name: link fits to /opt
   file: >
-    src=/opt/src/fits-{{fits_version}}
+    src=/opt/src/fits-{{ fits_version }}
     dest=/opt/fits
     state=link
   sudo: yes
