@@ -1,0 +1,12 @@
+{{ vecnet_deploy_root }}/shared/log/*.log {
+    daily
+    rotate 400
+    missingok
+    notifempty
+    compress
+    sharedscripts
+    postrotate
+        /bin/kill -USR1 $(cat {{ vecnet_deploy_root }}/shared/pids/unicorn.pid 2>/dev/null) 2>/dev/null || :
+    endscript
+}
+

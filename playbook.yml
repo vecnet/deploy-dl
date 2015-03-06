@@ -41,9 +41,11 @@
       - solr
       - fedora
       - nginx
+      - redis
       - fits
       - ruby
       - discovery
+      - vecnet
 
 # The geosuite role needs some adjustement
 # to configure the geoserver (it needs to

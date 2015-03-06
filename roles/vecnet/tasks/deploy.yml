@@ -1,25 +1,12 @@
+---
 #
 # Variables used here
-#   deploy_root - path to where to put code
+#   vecnet_deploy_root - path to where to put code
 #   release_dir - the directory for the new release
 #
-#
-#
-#
-#
-#chmod -R -- g+w /home/app/vecnet/releases/20141124164147 &&
-#
-#    rm -rf -- /home/app/vecnet/releases/20141124164147/public/system &&
-#    mkdir -p -- /home/app/vecnet/releases/20141124164147/public/ &&
-#    ln -s -- /home/app/vecnet/shared/system /home/app/vecnet/releases/20141124164147/public/system &&
-#    rm -rf -- /home/app/vecnet/releases/20141124164147/log &&
-#    ln -s -- /home/app/vecnet/shared/log /home/app/vecnet/releases/20141124164147/log &&
-#    rm -rf -- /home/app/vecnet/releases/20141124164147/tmp/pids &&
-#    mkdir -p -- /home/app/vecnet/releases/20141124164147/tmp/ &&
-#    ln -s -- /home/app/vecnet/shared/pids /home/app/vecnet/releases/20141124164147/tmp/pids
 
 - name: copy code to directory
-  command: cp -RPp {{ deploy_root }}/shared/cached-copy {{ release_dir }}
+  command: cp -RPp {{ vecnet_deploy_root }}/shared/cached-copy {{ release_dir }}
 
 - name: fix permissions on {{ release_dir }}
   file: >
@@ -40,7 +27,7 @@
 
 - name: link in the shared directories
   file: >
-    src={{ deploy_root }}/shared/{{ item.src }}
+    src={{ vecnet_deploy_root }}/shared/{{ item.src }}
     path={{ release_dir }}/{{ item.target }}
     state=link
   with_items:
@@ -54,30 +41,37 @@
     dest={{ release_dir }}/config/{{ item }}
   with_items:
       - database.yml
+      - redis.yml
+      - secrets.yml
       - solr.yml
 
 - name: bundle install
-  shell: su app -c "source /etc/profile.d/chruby.sh
-    && chruby 2.0.0-p353
-    && exec bundle install --gemfile {{ release_dir }}/Gemfile --path {{ deploy_root }}/shared/bundle --deployment --without development test"
-    chdir={{ release_dir }}
-
+  shell: >
+      source /etc/profile.d/chruby.sh
+      && chruby 2.0.0-p353
+      && exec bundle install --gemfile {{ release_dir }}/Gemfile --path {{ vecnet_deploy_root }}/shared/bundle --deployment --without development test
+      chdir={{ release_dir }}
+  sudo_user: app
 
 - name: write_build_identifier
   shell: date '+%Y%m%d %H:%M:%S' > {{ release_dir }}/config/bundle-identifier.txt
     creates={{ release_dir }}/config/bundle-identifier.txt
 
 - name: deploy migrate
-  shell: su app -c "source /etc/profile.d/chruby.sh
-    && chruby 2.0.0-p353
-    && exec bundle exec rake RAILS_ENV={{ rails_env }} db:migrate"
-    chdir={{ release_dir }}
+  shell: >
+      source /etc/profile.d/chruby.sh
+      && chruby 2.0.0-p353
+      && exec bundle exec rake RAILS_ENV={{ rails_env }} db:migrate
+      chdir={{ release_dir }}
+  sudo_user: app
 
 - name: deploy precompile
-  shell: su app -c "source /etc/profile.d/chruby.sh
-        && chruby 2.0.0-p353
-        && exec bundle exec rake RAILS_ENV={{ rails_env }} RAILS_GROUPS=assets assets:precompile"
-        chdir={{ release_dir }}
+  shell: >
+      source /etc/profile.d/chruby.sh
+      && chruby 2.0.0-p353
+      && exec bundle exec rake RAILS_ENV={{ rails_env }} RAILS_GROUPS=assets assets:precompile
+      chdir={{ release_dir }}
+  sudo_user: app
 
 - name: vecnet:write_env_vars
   template: >
@@ -89,7 +83,7 @@
 
 - name: only keep last 6 deploys
   shell: >
-      ls -1dt {{ deploy_root }}/releases/* | tail -n +6 |  xargs rm -rf
-      chdir={{ deploy_root }}/releases
+      ls -1dt {{ vecnet_deploy_root }}/releases/* | tail -n +6 |  xargs rm -rf
+      chdir={{ vecnet_deploy_root }}/releases
 
 

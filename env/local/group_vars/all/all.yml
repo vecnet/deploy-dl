@@ -3,9 +3,11 @@ open_redis_port: false
 ansible_ssh_user: vagrant
 
 discovery_branch: jcu-deploy
+vecnet_branch: master
 rails_env: jcu
 
 discovery_rails_secret_key: "{{ vault_discovery_rails_secret_key }}"
+vecnet_rails_secret_key: "{{ vault_vecnet_rails_secret_key }}"
 
 use_ssl: false
 restrict_access: false

@@ -4,9 +4,9 @@
   pool: 5
   timeout: 5000
   host: {{ db_hostname }}
-  database: {{ db_name }}
-  username: {{ db_user }}
-  password: {{ db_password }}
+  database: vecnet_db
+  username: vecnet
+  password: {{ vecnet_db_pass }}
 
 {{ rails_env }}_remote_purl_database:
   <<: *main

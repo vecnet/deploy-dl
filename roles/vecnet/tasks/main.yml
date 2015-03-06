@@ -1,12 +1,16 @@
-
+---
 - name: make app user
   user: name=app
 
 - name: install packages
   yum: >
     name={{ item }}
-    ensure=present
+    state=present
   with_items:
+    - libxml2
+    - libxml2-devel
+    - libxslt
+    - libxslt-devel
     - ImageMagick
     - ImageMagick-devel
     - clamav
@@ -15,9 +19,10 @@
     - postgresql-devel
 
 - name: install bundler
-  shell: su app -c "source /etc/profile.d/chruby.sh && chruby {{ ruby_version }} && gem install bundler"
+  shell: source /etc/profile.d/chruby.sh && chruby {{ ruby_version }} && gem install bundler
     chdir=/home/app
     creates=/home/app/.gem/ruby/2.0.0/bin/bundle
+  sudo_user: app
   # TODO: does this creates path depends on the ruby version? how to strip the patch level off the ruby_version?
 
 # capistrano-like directory layout
@@ -29,7 +34,7 @@
 
 - name: setup application directory layout
   file: >
-    path={{ deploy_root }}/{{ item }}
+    path={{ vecnet_deploy_root }}/{{ item }}
     state=directory
     owner=app
     group=app
@@ -45,38 +50,32 @@
 
 - name: check out code
   git: >
-    repo="https://github.com/vecnet/geo-pilot.git"
-    dest={{ deploy_root }}/shared/cached-copy
+    repo="https://github.com/vecnet/vecnet-dl.git"
+    dest={{ vecnet_deploy_root }}/shared/cached-copy
     force=yes
     recursive=no
-    version=ansible
+    version={{ vecnet_branch|d('master') }}
 
 - name: HEAD ref
   command: git rev-parse --verify HEAD
-    chdir={{ deploy_root }}/shared/cached-copy
+    chdir={{ vecnet_deploy_root }}/shared/cached-copy
   register: head_ref
 
 - name: See if directory exists
-  command: ls {{ deploy_root }}/releases/{{ head_ref.stdout }}
+  command: ls {{ vecnet_deploy_root }}/releases/{{ head_ref.stdout }}
   register: deploy_exists
   ignore_errors: yes
 
-#- name: Copy code to current repo
-#  command: cp -RPp {{deploy_root}}/shared/cached-copy {{deploy_root}}/current
-
-#- name: Run deploy script
-#  script: deploy.sh {{deploy_root}} {{deploy_root}}/releases/{{head_ref.stdout}} {{rails.env}}
-#  when: deploy_exists.rc != 0
-
 - name: Do deployment
   include: deploy.yml
-  when: deploy_exists.rc != 0
+  #when: deploy_exists.rc != 0
   vars:
-    release_dir: "{{ deploy_root }}/releases/{{ head_ref.stdout }}"
+    release_dir: "{{ vecnet_deploy_root }}/releases/{{ head_ref.stdout }}"
 
+# do the next three tasks belong here? should they be in deploy.yml instead?
 - name: Fix permissions
   file: >
-    path={{ deploy_root }}
+    path={{ vecnet_deploy_root }}
     state=directory
     owner=app
     group=app
@@ -85,28 +84,25 @@
 
 - name: link current directory
   file: >
-    src={{ deploy_root }}/releases/{{ head_ref.stdout }}
-    path={{ deploy_root }}/current
+    src={{ vecnet_deploy_root }}/releases/{{ head_ref.stdout }}
+    path={{ vecnet_deploy_root }}/current
     state=link
 
 - name: restart unicorn
-  command: su app -c "{{ deploy_root }}/current/script/reload-unicorn.sh"
+  command: "{{ vecnet_deploy_root }}/current/script/reload-unicorn.sh"
+  sudo_user: app
 
 #- name: restart workers
-#  shell: su app -c "{{deploy_root}}/current/script/stop-pool.sh && {{deploy_root}}/current/script/start-pool.sh"
+#  shell: su app -c "{{ vecnet_deploy_root }}/current/script/stop-pool.sh && {{ vecnet_deploy_root }}/current/script/start-pool.sh"
 #
 
-#Copy public key into app user .ssh folder of whoever is going to deploy to that machine
-#Run cap ENV deploy:setup in dev machine
-# make /opt/vecnet-geopilot directory
-
-
-#- name: install log rotate
-#  copy: src=logrotata.d/vecnet
-#    dest=/etc/logrotate.d/vecnet
-#    owner=root
-#    group=root
-#    mode=644
+- name: install log rotate
+  template: >
+    src=logrotate.j2
+    dest=/etc/logrotate.d/vecnet
+    owner=root
+    group=root
+    mode=644
 
 # init.d
 # run as root

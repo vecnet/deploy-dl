@@ -30,7 +30,7 @@
     mode=755
     recurse=yes
 
-- name: ensure {{ release_dir }}/tmp exists
+- name: ensure tmp exists
   file: >
     path={{ release_dir }}/tmp
     state=directory
