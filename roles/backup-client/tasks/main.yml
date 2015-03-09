@@ -7,13 +7,13 @@
       group=app
       mode=644
 
-- name: dl-backup identity
-  file: >
-      contents={{ dl_backup_private_key }}
-      dest=/home/app/.ssh/dl-backup_rsa
-      owner=app
-      group=app
-      mode=400
+#- name: dl-backup identity
+#  file: >
+#      contents={{ dl_backup_private_key }}
+#      dest=/home/app/.ssh/dl-backup_rsa
+#      owner=app
+#      group=app
+#      mode=400
 
 - name: rsync script
   template: >
