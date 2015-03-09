@@ -46,4 +46,6 @@
    - tree
    - vim
    - runit
+   - golang
+   - python-httplib2
 

@@ -42,6 +42,7 @@
       - fedora
       - nginx
       - redis
+      - noids
       - fits
       - ruby
       - discovery

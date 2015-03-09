@@ -1,0 +1,68 @@
+---
+- name: install latest noids code
+  command: /bin/env GOPATH=/opt/gocode /usr/bin/go get -u github.com/ndlib/noids
+
+- name: create pool storage palce
+  file: >
+      path={{ item }}
+      state=directory
+      owner=app
+      group=app
+      mode=755
+  with_items:
+      - /opt/noids
+      - /opt/noids/pools
+
+- name: create log directory
+  file: >
+      path=/opt/log/noids
+      state=directory
+      owner=app
+      group=app
+
+- name: create noids service directory
+  file: >
+      path=/opt/sv/noids
+      state=directory
+      mode=0775
+
+- name: copy noids run scripts
+  template: >
+      src={{ item }}.j2
+      dest=/opt/sv/noids/{{ item }}
+      owner=app
+      group=app
+      mode=775
+  with_items:
+      - run
+      - finish
+
+- name: copy noids configuration
+  template: >
+      src=settings.ini.j2
+      dest=/opt/sv/noids/settings.ini
+      owner=app
+      group=app
+      mode=664
+
+# create the vecnet pool, but only if it doesn't exist
+- name: install service
+  file: >
+      src=/opt/sv/noids
+      path=/etc/service/noids
+      state=link
+
+- name: wait for service
+  wait_for: >
+      port=13001
+      state=started
+      delay=1
+      timeout=10
+
+- name: create vecnet pool
+  uri: >
+      method=POST
+      url=http://localhost:13001/pools/vecnet?name=vecnet&template=.reeddeeddk
+      status_code=201
+      creates=/opt/noids/pools/vecnet
+

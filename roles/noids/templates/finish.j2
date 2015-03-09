@@ -1,0 +1,9 @@
+#!/bin/bash
+
+MAILTO={{ noids_finish_email }}
+
+mail -s "noids $(hostname)" $MAILTO <<EOF
+On $(date) noids exited with codes:
+$*
+EOF
+

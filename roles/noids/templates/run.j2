@@ -1,0 +1,4 @@
+#!/bin/bash
+exec 2>&1
+exec chpst -u app /opt/gocode/bin/noids -config /opt/sv/noids/settings.ini -log /opt/log/noids/noids.log
+
