@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# vecnet-worker-pool - this script starts and stops the vecnet worker pool
+#
+# chkconfig:   - 85 15
+# description: Vecnet is a ruby on rails application
+# processname: resque-pool
+# config:      /home/app/vecnet/current/config/application.rb
+# pidfile:     /home/app/vecnet/current/tmp/pids/unicorn.pid
+
+
+case "$1" in
+    start)
+        su -l -c 'cd {{ vecnet_deploy_root }}/current && ./script/start-pool.sh' app
+        ;;
+    stop)
+        echo "Not implemented: $1"
+        exit 1
+        ;;
+    restart|reload|configtest|reopen_logs)
+        su -l -c 'cd {{ vecnet_deploy_root }}/current && ./script/update-site.sh' app
+        ;;
+    status|status_q|condrestart|try-restart)
+        echo "Not implemented: $1"
+        exit 1
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|reload|configtest|status|force-reload|upgrade|restart|reopen_logs}"
+        exit 2
+esac
+
+exit 0
+
