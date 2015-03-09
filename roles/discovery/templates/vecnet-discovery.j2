@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# vecnet-discovery - this script starts and stops the vecnet discovery application
+#
+# chkconfig:   - 85 15
+# description:  Vecnet is a ruby on rails application
+# processname: unicorn
+# config:      {{ discovery_deploy_root }}/current/config/application.rb
+# pidfile:     {{ discovery_deploy_root }}/current/tmp/pids/unicorn.pid
+
+
+case "$1" in
+    start)
+        su -l -c 'cd {{ discovery_deploy_root }}/current && ./script/start-server.sh' app
+        ;;
+    stop)
+        echo "Not implemented: $1"
+        exit 1
+        ;;
+    restart|reload|configtest|reopen_logs)
+        su -l -c 'cd {{ discovery_deploy_root }}/vecnet/current && ./script/reload-unicorn.sh' app 
+        ;;
+    status|status_q|condrestart|try-restart)
+        echo "Not implemented: $1"
+        exit 1
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|reload|configtest|status|force-reload|upgrade|restart|reopen_logs}"
+        exit 2
+esac
+
+exit 0
+

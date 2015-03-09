@@ -85,14 +85,16 @@
 - name: install log rotate
   template: >
     src=logrotate.j2
-    dest=/etc/logrotate.d/vecnet
+    dest=/etc/logrotate.d/vecnet-discovery
     owner=root
     group=root
     mode=644
 
-# init.d
-# run as root
-#sudo cp devops/etc/init.d/* /etc/init.d
-#sudo chkconfig --add vecnet-server
-#sudo chkconfig vecnet-server on
+- name: install init.d
+  template: >
+      src=vecnet-discovery.j2
+      dest=/etc/init.d/vecnet-discovery
+
+- name: start server on startup
+  command: /sbin/chkconfig vecnet-discovery on
 
