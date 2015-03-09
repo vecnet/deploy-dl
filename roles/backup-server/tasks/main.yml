@@ -1,0 +1,34 @@
+---
+- name: create directories
+  file: >
+    path=/data/{{ backup_user }}/{{ item }}
+    state=directory
+    mode=770
+  with_items:
+    - dl
+    - dw
+    - joomla
+
+#- name: add public keys
+#  authorized_key: >
+#    key=
+#    user={{ backup_user }}
+
+- name: update clean scripts
+  template: >
+    src={{ item }}.j2
+    dest=/data/{{ backup_user }}/{{ item }}
+    mode=777
+  with_items:
+    - clean-dw.sh
+    - clean-joomla.sh
+
+- name: update cron tab
+  cron: >
+    name=~{{ backup_user }}/{{ item }}.sh
+    special_time=weekly
+    state=present
+    user={{ backup_user }}
+  with_items:
+    - clean-dw.sh
+    - clean-joomla.sh

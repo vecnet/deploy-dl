@@ -1,0 +1,12 @@
+---
+# host to rsync files to
+backup_host: q0096.qcloud.qcif.edu.au
+
+# user to log in as on backup host
+backup_user: Q0096-RW
+
+# email to use in case of errors
+backup_email: dbrower@nd.edu
+
+# place to put backup log file
+backup_log_file: /home/app/dl-rsync.log

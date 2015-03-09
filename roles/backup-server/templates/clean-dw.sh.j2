@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Remove all but the 2 most recent backups from the dw directory.
+# This may have problems if the file names contain spaces.
+TARGET_DIR=dw
+NUMBER_TO_KEEP=2
+
+cd $TARGET_DIR
+OLD_FILES=$(ls -t | awk "NR>$NUMBER_TO_KEEP")
+
+if [ -n "$OLD_FILES" ]; then
+	rm -f $OLD_FILES
+fi

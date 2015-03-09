@@ -1,0 +1,25 @@
+#!/bin/bash
+
+EMAIL=""
+LOGFILE={{ backup_log_file }}
+TEMPFILE=$(mktemp)
+FEDORA_DATA_PATH=/opt/fedora/data
+
+# redirect stdout and stderr to the log file
+# http://www.xensoft.com/content/use-exec-direct-all-bash-script-output-file-syslog-or-other-command
+exec 1> $TEMPFILE 2>&1
+
+echo $(date "+%Y-%m-%d %H:%M:%S") "========== Starting rsync"
+# give full path to time so we don't get the shell builtin
+/usr/bin/time rsync -ztrp --stats $FEDORA_DATA_PATH {{ backup_user }}@{{ backup_host }}:dl
+status=$?
+echo $(date "+%Y-%m-%d %H:%M:%S") "Finished rsync, status $status"
+
+if [ -n "$EMAIL" -o $status -ne 0 ]; then
+    mail -s "Vecnet DL Rsync" $EMAIL < $TEMPFILE
+fi
+
+# copy new log stuff to base log file
+cat $TEMPFILE >> $LOGFILE
+
+exit $status

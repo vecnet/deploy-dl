@@ -1,0 +1,34 @@
+---
+- name: ssh config
+  template: >
+      src=ssh-config.j2
+      dest=/home/app/.ssh/config
+      owner=app
+      group=app
+      mode=644
+
+- name: dl-backup identity
+  file: >
+      contents={{ dl_backup_private_key }}
+      dest=/home/app/.ssh/dl-backup_rsa
+      owner=app
+      group=app
+      mode=400
+
+- name: rsync script
+  template: >
+      src=rsync-to-jcu.sh.j2
+      dest=/home/app/rsync-to-jcu.sh
+      owner=app
+      group=app
+      mode=755
+
+- name: cron config file
+  template: >
+      src=cron.j2
+      dest=/home/app/cron.txt
+      owner=app
+      group=app
+      mode=644
+  notify:
+      update crontab

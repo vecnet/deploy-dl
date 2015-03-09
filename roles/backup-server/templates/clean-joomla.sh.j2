@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Remove all but the 2 most recent backups from the joomla directory.
+# The number to keep needs to be doubled because each joomla backup consists of two files.
+# We may have problems if the file names contain spaces.
+TARGET_DIR=joomla
+NUMBER_TO_KEEP=4
+
+cd $TARGET_DIR
+OLD_FILES=$(ls -t | awk "NR>$NUMBER_TO_KEEP")
+
+if [ -n "$OLD_FILES" ]; then
+	rm -f $OLD_FILES
+fi
+
