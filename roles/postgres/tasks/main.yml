@@ -47,6 +47,8 @@
     encrypted=yes
     password=md5{{ vecnet_db_pass_md5 }}
     priv=ALL
+# the hash function will be in ansible 1.9
+#password=md5{{ [vecnet_db_pass, "vecnet_db"]|join("")|hash('md5') }}
 
 - name: Add discovery db user
   sudo: yes
