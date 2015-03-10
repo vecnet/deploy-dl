@@ -47,6 +47,7 @@
       - ruby
       - discovery
       - vecnet
+      - disadis
 
 # The geosuite role needs some adjustement
 # to configure the geoserver (it needs to

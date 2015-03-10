@@ -1,0 +1,23 @@
+[General]
+fedora-addr = http://{{ fedora_user }}:{{ fedora_password }}@localhost:8081/fedora/
+log-filename = /opt/log/disadis/disadis.log
+admin = dl_librarian
+
+[Handler "dl"]
+port        = {{ disadis_port }}
+prefix      = vecnet:
+datastream  = content
+versioned   = true
+
+{% if pubtkt_private_key is defined %}
+auth        = true
+
+[Pubtkt]
+key-file = /opt/sv/disadis/{{ pubtkt_private_key }}
+{% endif %}
+
+[Handler "thumb"]
+port            = {{ disadis_port }}
+prefix          = vecnet:
+datastream      = thumbnail
+datastream-id   = thumbnail

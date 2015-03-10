@@ -47,5 +47,6 @@
    - vim
    - runit
    - golang
+   - mercurial
    - python-httplib2
 

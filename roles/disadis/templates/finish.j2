@@ -1,0 +1,9 @@
+#!/bin/bash
+
+MAILTO={{ disadis_finish_email }}
+
+mail -s "disadis $(hostname)" $MAILTO <<EOF
+On $(date) disadis exited with codes:
+$*
+EOF
+

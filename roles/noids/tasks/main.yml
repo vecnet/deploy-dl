@@ -1,6 +1,6 @@
 ---
 - name: install latest noids code
-  command: /bin/env GOPATH=/opt/gocode /usr/bin/go get -u github.com/ndlib/noids
+  command: /bin/env GOPATH=/opt/gocode /usr/bin/go get github.com/ndlib/noids
 
 - name: create pool storage palce
   file: >

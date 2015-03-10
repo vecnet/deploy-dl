@@ -1,0 +1,9 @@
+---
+disadis_finish_email: dbrower@nd.edu
+fedora_user: fedoraAdmin
+fedora_password: fedoraAdmin
+disadis_port: 4000
+
+# define this if there is a private key to validate pubtkts
+# then we will look for this file in /opt/secrets/
+# pubtkt_private_key: pubtkt_private.pem
