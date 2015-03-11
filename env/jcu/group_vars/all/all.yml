@@ -2,13 +2,17 @@
 open_redis_port: false
 ansible_ssh_user: ec2-user
 
-discovery_branch: jcu-deploy
+discovery_branch: master
+vecnet_branch: master
 rails_env: jcu
 
 discovery_rails_secret_key: "{{ vault_discovery_rails_secret_key }}"
+vecnet_rails_secret_key: "{{ vault_vecnet_rails_secret_key }}"
 
 use_ssl: false
 restrict_access: false
+
+fedora_admin_password: "{{ vault_fedora_admin_password }}"
 
 # postgres password for the repository application
 vecnet_db_pass: "{{ vault_vecnet_db_pass }}"
