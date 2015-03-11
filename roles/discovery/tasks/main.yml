@@ -81,6 +81,14 @@
 - name: restart unicorn
   command: su app -c "{{ discovery_deploy_root }}/current/script/reload-unicorn.sh"
 
+- name: link assets directory
+  file: >
+    src={{ discovery_deploy_root }}/current/public
+    path=/opt/www/assets-discovery
+    state=link
+    owner=nginx
+    group=nginx
+    mode=755
 
 - name: install log rotate
   template: >

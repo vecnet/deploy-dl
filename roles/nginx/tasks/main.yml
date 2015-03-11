@@ -20,9 +20,9 @@
     - nginx.conf
   notify: reload nginx
 
-- name: make robots dir
+- name: make www dir
   file: >
-    path=/opt/robots
+    path=/opt/www
     owner=nginx
     group=nginx
     mode=554
@@ -31,9 +31,10 @@
 - name: copy robots.txt
   template: >
     src=robots.txt.j2
-    dest=/opt/robots/robots.txt
+    dest=/opt/www/robots.txt
     owner=nginx
     group=nginx
+    mode=554
 
 - name: start nginx
   service: >

@@ -122,7 +122,7 @@
 
 - name: Copy vecnet solr config
   copy: >
-    src={{ item }}
+    src=vecnet/{{ item }}
     dest=/opt/solr/vecnet/conf/{{ item }}
     owner=tomcat
     group=tomcat
@@ -134,6 +134,7 @@
     - solrconfig.xml
     - stopwords_en.txt
     - synonyms.txt
+  notify: restart tomcat
 
 #
 # setup discovery core
@@ -161,6 +162,7 @@
     - solrconfig.xml
     - stopwords_en.txt
     - synonyms.txt
+  notify: restart tomcat
 
 - name: Copy solr.xml into tomcat
   sudo: yes

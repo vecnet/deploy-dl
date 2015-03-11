@@ -96,6 +96,15 @@
 #  shell: su app -c "{{ vecnet_deploy_root }}/current/script/stop-pool.sh && {{ vecnet_deploy_root }}/current/script/start-pool.sh"
 #
 
+- name: link assets directory
+  file: >
+    src={{ vecnet_deploy_root }}/current/public
+    path=/opt/www/assets-vecnet
+    state=link
+    owner=nginx
+    group=nginx
+    mode=755
+
 - name: install log rotate
   template: >
     src=logrotate.j2

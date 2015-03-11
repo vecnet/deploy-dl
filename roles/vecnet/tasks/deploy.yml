@@ -8,7 +8,7 @@
 - name: copy code to directory
   command: cp -RPp {{ vecnet_deploy_root }}/shared/cached-copy {{ release_dir }}
 
-- name: fix permissions on {{ release_dir }}
+- name: fix permissions on release_dir
   file: >
     path={{ release_dir }}
     state=directory
@@ -17,7 +17,7 @@
     mode=755
     recurse=yes
 
-- name: ensure {{ release_dir }}/tmp exists
+- name: ensure release_dir/tmp exists
   file: >
     path={{ release_dir }}/tmp
     state=directory
@@ -41,9 +41,30 @@
     dest={{ release_dir }}/config/{{ item }}
   with_items:
       - database.yml
+      - fedora.yml
       - redis.yml
       - secrets.yml
       - solr.yml
+
+#- name: Install pubtkt public key file
+#command: cp -Pp /opt/secrets/{{ pubtkt_public_key_file }} {{ vecnet_deploy_root }}/config/pubtkt.pem
+#  when: pubtkt_public_key_file is defined
+#
+#- name: Copy pubtkt public key
+#  copy: >
+#      contents={{ pubtkt_public_key }}
+#      dest={{ release_dir }}/config/pubtkt.pem
+#      owner=app
+#      group=app
+#      mode=444
+#  when: pubtkt_public_key is defined
+#
+#- name: set pubtkt permissions
+#  file: >
+#      dest={{ release_dir }}/config/pubtkt.pem
+#      owner=app
+#      group=app
+#      mode=444
 
 - name: bundle install
   shell: >

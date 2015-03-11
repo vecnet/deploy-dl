@@ -4,39 +4,36 @@
 
 user              nginx nginx;
 worker_processes  2;
+pid               /var/run/nginx.pid;
 
-error_log  /var/log/nginx/error.log;
+error_log         /var/log/nginx/error.log;
 #error_log  /var/log/nginx/error.log  notice;
 #error_log  /var/log/nginx/error.log  info;
 
-pid        /var/run/nginx.pid;
-
-
 events {
-    worker_connections  1024;
+    worker_connections 1024;
     use epoll;
 }
-
 
 http {
     include       /etc/nginx/mime.types;
     default_type  application/octet-stream;
     server_tokens off;
 
-    log_format  main  '$remote_addr|$remote_user|$time_local|$request|'
-                      '$status|$body_bytes_sent|$http_referer|'
-                      '$http_user_agent|$http_x_forwarded_for|'
-                      '$request_time|$upstream_response_time|$cookie_auth_pubtkt';
+    log_format    main  '$remote_addr|$remote_user|$time_local|$request|'
+                        '$status|$body_bytes_sent|$http_referer|'
+                        '$http_user_agent|$http_x_forwarded_for|'
+                        '$request_time|$upstream_response_time|$cookie_auth_pubtkt';
 
-    access_log  /var/log/nginx/access.log  main;
+    access_log    /var/log/nginx/access.log  main;
 
-    sendfile        on;
-    tcp_nopush      on;
-    tcp_nodelay     on;
+    sendfile      on;
+    tcp_nopush    on;
+    tcp_nodelay   on;
 
     keepalive_timeout  65;
 
-    gzip  on;
+    gzip          on;
 
     {% if restrict_access %}
     # restrict access to vpn
