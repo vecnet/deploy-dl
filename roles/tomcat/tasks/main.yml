@@ -19,7 +19,7 @@
 
 - name: Update java options
   sudo: yes
-  copy: >
+  template: >
     src=tomcat6.conf
     dest=/etc/tomcat6/tomcat6.conf
     owner=root

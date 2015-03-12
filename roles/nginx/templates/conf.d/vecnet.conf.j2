@@ -41,9 +41,14 @@ server {
         break;
     }
 
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+# we don't have any of these, so short-circuit them early.
+#    location ~ \.(aspx|php|jsp|cgi)$ {
+#        return 410;
+#    }
+
+    proxy_set_header Host              $host;
+    proxy_set_header X-Real-IP         $remote_addr;
+    proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
 
     location ^~ /downloads/ {
@@ -54,11 +59,27 @@ server {
         proxy_pass http://disadis/;
     }
 
+{% macro dl_location(loc) -%}
+    location ^~ {{ loc }} {
+        proxy_redirect off;
+        proxy_pass http://vecnet;
+    }
+{%- endmacro %}
+
+    {{ dl_location('/concern/') }}
+    {{ dl_location('/classify_concerns') }}
+    {{ dl_location('/files/') }}
+    {{ dl_location('/show/') }}
+    {{ dl_location('/citations/') }}
+    {{ dl_location('/role_dashboard/') }}
+    {{ dl_location('/admin_dashboard/') }}
+    {{ dl_location('/dashboard/') }}
+    {{ dl_location('/authorities/') }}
+    {{ dl_location('/admin/') }}
+
     try_files $uri @app;
 
     location @app {
-        proxy_intercept_errors on;
-        error_page 404 = @backend;
         proxy_redirect off;
         proxy_pass http://discovery;
     }

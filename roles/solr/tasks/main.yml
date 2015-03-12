@@ -132,6 +132,7 @@
     - protwords.txt
     - schema.xml
     - solrconfig.xml
+    - stopwords.txt
     - stopwords_en.txt
     - synonyms.txt
   notify: restart tomcat
