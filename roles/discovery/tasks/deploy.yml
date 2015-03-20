@@ -56,7 +56,17 @@
   with_items:
       - database.yml
       - solr.yml
-      - secrets.yml
+      - initializers/secret_token.rb
+
+# since we are using secret_token to be compatable with rails 3 cookies,
+# we don't set secret_key_base, and blacklight complains.
+# This task fixes that
+- name: Add blacklight secret token
+  lineinfile: >
+      dest={{ release_dir }}/config/initializers/blacklight_initializer.rb
+      state=present
+      regexp=secret_key
+      line="Blacklight.secret_key = \"{{ rails_secret_token }}\""
 
 - name: bundle install
   shell: su app -c "source /etc/profile.d/chruby.sh

@@ -43,7 +43,7 @@
       - database.yml
       - fedora.yml
       - redis.yml
-      - secrets.yml
+      - initializers/secret_token.rb
       - solr.yml
 
 #- name: Install pubtkt public key file
