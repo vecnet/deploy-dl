@@ -49,4 +49,11 @@
    - golang
    - mercurial
    - python-httplib2
+   - logwatch
+
+- name: set logwatch email
+  template: >
+      src=logwatch.j2
+      dest=/etc/logwatch/conf/logwatch.conf
+  when: logwatch_email is defined
 
