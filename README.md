@@ -12,17 +12,25 @@ For example
     $ vagrant up
     $ ansible-playbook playbook.yml -i env/local/inventory --ask-vault-pass
 
+This can get tedious, so there is also a makefile to do this
+
+    $ make local deploy
+
+or
+
+    $ make standalone deploy
+
 ## Deployment
 
 To deploy to an environment you need to have your public ssh key installed on the appropriate hosts.
 
 Then to provision the QA environment run the following
 
-    $ ansible-playbook playbook.yml -i env/qa/inventory --ask-vault-pass
+    $ make qa deploy
 
 To deploy to production
 
-    $ ansible-playbook playbook.yml -i env/production/inventory --ask-vault-pass
+    $ make production deploy
 
 ## Distinction between Provisioning and Deploying
 

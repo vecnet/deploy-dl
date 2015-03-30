@@ -3,11 +3,11 @@ open_redis_port: false
 ansible_ssh_user: ec2-user
 
 discovery_branch: master
-vecnet_branch: master
+vecnet_branch: discovery-integration
 rails_env: jcu
 
-discovery_rails_secret_key: "{{ vault_discovery_rails_secret_key }}"
-vecnet_rails_secret_key: "{{ vault_vecnet_rails_secret_key }}"
+pubtkt_public_key:
+rails_secret_token: "{{ vault_rails_secret_token }}"
 
 use_ssl: false
 restrict_access: false
