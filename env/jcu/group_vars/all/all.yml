@@ -3,7 +3,7 @@ open_redis_port: false
 ansible_ssh_user: ec2-user
 
 discovery_branch: mvp.v.0.3
-vecnet_branch: discovery-integration
+vecnet_branch: master
 rails_env: jcu
 
 pubtkt_public_key:
