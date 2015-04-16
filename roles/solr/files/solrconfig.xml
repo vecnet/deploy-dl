@@ -15,9 +15,9 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-<!-- 
+<!--
      For more details about configurations options that may appear in
-     this file, see http://wiki.apache.org/solr/SolrConfigXml. 
+     this file, see http://wiki.apache.org/solr/SolrConfigXml.
 -->
 <config>
   <luceneMatchVersion>4.7</luceneMatchVersion>
@@ -40,16 +40,16 @@
     </autoCommit>
   </updateHandler>
 
-  <!-- realtime get handler, guaranteed to return the latest stored fields 
-    of any document, without the need to commit or open a new searcher. The current 
+  <!-- realtime get handler, guaranteed to return the latest stored fields
+    of any document, without the need to commit or open a new searcher. The current
     implementation relies on the updateLog feature being enabled. -->
   <requestHandler name="/get" class="solr.RealTimeGetHandler">
     <lst name="defaults">
       <str name="omitHeader">true</str>
     </lst>
-  </requestHandler>  
-  
-  <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy" /> 
+  </requestHandler>
+
+  <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy" />
 
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
        Query section - these settings control query time things like caches
@@ -106,14 +106,11 @@
         dc_description_ti^2
         dc_creator_tmi^3
         dc_publisher_ti^3
-        dct_isPartOf_tmi^4
         dc_subject_tmi^5
         dct_spatial_tmi^5
         dct_temporal_tmi^5
         dc_title_ti^6
         dc_rights_ti^7
-        dct_provenance_ti^8
-        layer_geom_type_ti^9
         layer_slug_ti^10
         dc_identifier_ti^10
       </str>
@@ -122,31 +119,23 @@
         dc_description_ti^2
         dc_creator_tmi^3
         dc_publisher_ti^3
-        dct_isPartOf_tmi^4
         dc_subject_tmi^5
         dct_spatial_tmi^5
         dct_temporal_tmi^5
         dc_title_ti^6
-        dc_rights_ti^7
-        dct_provenance_ti^8
-        layer_geom_type_ti^9
         layer_slug_ti^10
         dc_identifier_ti^10
       </str>
       <bool name="facet">true</bool>
       <int name="facet.mincount">1</int>
       <int name="facet.limit">10</int>
-      <str name="facet.field">dct_isPartOf_sm</str>
-      <str name="facet.field">dct_provenance_s</str>
+      <str name="facet.field">dc_type_s</str>
       <str name="facet.field">dct_spatial_sm</str>
       <str name="facet.field">dc_creator_sm</str>
-      <str name="facet.field">dc_format_s</str>
-      <str name="facet.field">dc_language_s</str>
+      <str name="facet.field">vn_keyword_sm</str>
       <str name="facet.field">dc_publisher_s</str>
-      <str name="facet.field">dc_rights_s</str>
-      <str name="facet.field">dc_subject_sm</str>
-      <str name="facet.field">layer_geom_type_s</str>
-      <str name="facet.field">solr_year_i</str>
+      <str name="facet.field">dc_subject_h_facet</str>
+      <str name="facet.field">dwc_scientificname_h_facet</str>
     </lst>
   </requestHandler>
 
@@ -161,18 +150,18 @@
     <lst name="defaults">
       <str name="echoParams">all</str>
     </lst>
-    <!-- An optional feature of the PingRequestHandler is to configure the 
-         handler with a "healthcheckFile" which can be used to enable/disable 
+    <!-- An optional feature of the PingRequestHandler is to configure the
+         handler with a "healthcheckFile" which can be used to enable/disable
          the PingRequestHandler.
-         relative paths are resolved against the data dir 
+         relative paths are resolved against the data dir
       -->
     <str name="healthcheckFile">server-enabled.txt</str>
   </requestHandler>
-  
-  <requestHandler name="/analysis/field" 
+
+  <requestHandler name="/analysis/field"
                   startup="lazy"
                   class="solr.FieldAnalysisRequestHandler" />
-                  
+
   <!-- Legacy config for the admin interface -->
   <admin>
     <defaultQuery>*:*</defaultQuery>

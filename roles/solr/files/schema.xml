@@ -6,6 +6,9 @@
     <field name="timestamp" type="date"   stored="true" indexed="true" default="NOW"/>
     <field name="uuid"      type="string" stored="true" indexed="true" required="true"/>
 
+    <!-- only used for full text searching. not rolled into "text" -->
+    <field name="full_text" type="text_en" stored="false" indexed="true" multiValued="false" />
+
     <!-- core generated fields -->
     <field name="text" type="text_en" stored="false" indexed="true" multiValued="true"
                        termVectors="true" termPositions="true" termOffsets="true" />
@@ -24,6 +27,8 @@
     <dynamicField name="*_sm"   type="string"  stored="true"  indexed="true" multiValued="true" />
     <dynamicField name="*_url"  type="string"  stored="true"  indexed="false"/>
     <dynamicField name="*_blob" type="binary"  stored="true"  indexed="false"/>
+
+    <dynamicField name="*_facet" type="string" stored="true"  indexed="true" multiValued="true" />
 
     <!-- dynamic Text fields by suffix without storage -->
     <dynamicField name="*_t"    type="text_en" stored="false"  indexed="true"
@@ -136,7 +141,7 @@
   <copyField source="dc_creator_sm"      dest="dc_creator_tmi"      maxChars="1000"/>
   <copyField source="dc_description_s"   dest="dc_description_ti"   maxChars="10000"/>
   <copyField source="dc_format_s"        dest="dc_format_ti"        maxChars="100"/>
-  <copyField source="dc_identifier_s"    dest="dc_identifier_ti"    maxChars="100"/>
+  <copyField source="dc_identifier_sm"   dest="dc_identifier_tmi"   maxChars="100"/>
   <copyField source="dc_publisher_s"     dest="dc_publisher_ti"     maxChars="1000"/>
   <copyField source="dc_rights_s"        dest="dc_rights_ti"        maxChars="100"/>
   <copyField source="dct_provenance_s"   dest="dct_provenance_ti"   maxChars="1000"/>
@@ -145,6 +150,18 @@
   <copyField source="dct_isPartOf_sm"    dest="dct_isPartOf_tmi"    maxChars="1000"/>
   <copyField source="layer_geom_type_s"  dest="layer_geom_type_ti"  maxChars="100"/>
   <copyField source="layer_slug_s"       dest="layer_slug_ti"       maxChars="100"/>
+
+  <copyField source="dc_relation_sm"     dest="dc_relation_tmi"     maxChars="100"/>
+  <copyField source="dc_created_sm"      dest="dc_created_tmi"      maxChars="100"/>
+  <copyField source="dc_type_s"          dest="dc_type_ti"          maxChars="100"/>
+  <copyField source="vn_filename_s"      dest="vn_filename_ti"      maxChars="100"/>
+  <copyField source="dc_creator_sm"      dest="dc_creator_tmi"      maxChars="1000"/>
+  <copyField source="dc_contributor_sm"  dest="dc_contributor_tmi"  maxChars="1000"/>
+  <copyField source="dwc_scientificname_sm" dest="dwc_scientificname_tmi" maxChars="1000"/>
+  <copyField source="vn_keyword_sm"      dest="vn_keyword_tmi"      maxChars="10000"/>
+  <copyField source="dc_language_sm"     dest="dc_language_tmi"     maxChars="1000"/>
+  <copyField source="dc_source_s"        dest="dc_source_ti"        maxChars="100"/>
+  <copyField source="vn_child_records_sm" dest="vn_child_records_tmi" maxChars="100"/>
 
   <!-- core text search -->
   <copyField source="*_ti"               dest="text" />
