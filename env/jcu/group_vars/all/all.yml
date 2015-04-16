@@ -2,7 +2,7 @@
 open_redis_port: false
 ansible_ssh_user: ec2-user
 
-discovery_branch: master
+discovery_branch: mvp.v.0.3
 vecnet_branch: discovery-integration
 rails_env: jcu
 

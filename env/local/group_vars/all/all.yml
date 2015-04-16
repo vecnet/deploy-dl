@@ -2,8 +2,8 @@
 open_redis_port: false
 ansible_ssh_user: vagrant
 
-discovery_branch: master
-vecnet_branch: discovery-integration
+discovery_branch: harvest
+vecnet_branch: master
 rails_env: jcu
 
 # define either pubtkt_private_key_file if the file is in /opt/secrets
