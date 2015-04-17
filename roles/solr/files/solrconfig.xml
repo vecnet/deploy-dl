@@ -104,14 +104,15 @@
       <str name="qf">
         text^1
         dc_description_ti^2
+        dc_rights_ti^2
         dc_creator_tmi^3
         dc_publisher_ti^3
         dc_subject_tmi^5
         dct_spatial_tmi^5
         dct_temporal_tmi^5
         dc_title_ti^6
-        dc_rights_ti^7
         layer_slug_ti^10
+        vn_child_records_tmi^10
         dc_identifier_ti^10
       </str>
       <str name="pf"><!-- phrase boost within result set -->
