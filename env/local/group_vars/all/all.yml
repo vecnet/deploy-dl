@@ -2,7 +2,7 @@
 open_redis_port: false
 ansible_ssh_user: vagrant
 
-discovery_branch: harvest
+discovery_branch: qa-deploy
 vecnet_branch: master
 rails_env: jcu
 

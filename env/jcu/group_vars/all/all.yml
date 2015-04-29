@@ -2,7 +2,7 @@
 open_redis_port: false
 ansible_ssh_user: ec2-user
 
-discovery_branch: mvp.v.0.3
+discovery_branch: qa-deploy
 vecnet_branch: master
 rails_env: jcu
 
