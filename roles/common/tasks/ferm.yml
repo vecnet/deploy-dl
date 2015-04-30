@@ -1,15 +1,12 @@
 ---
-- name: Add ferm config directory
+- name: Add ferm config directorys
   file: >
-    path=/etc/ferm
+    path={{ item }}
     state=directory
     owner=root group=root mode=0700
-
-- name: Add ferm config directory for additional config files
-  file: >
-    path=/etc/ferm/ferm.d
-    state=directory
-    owner=root group=root mode=0700
+  with_items:
+    - /etc/ferm
+    - /etc/ferm/ferm.d
 
 - name: Copy ferm config
   copy: >

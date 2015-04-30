@@ -1,21 +1,21 @@
 ---
 - name: create /opt hierarchy
   file: >
-    path=/opt/{{ item }}
-    state=directory
-    mode=0777
+      path=/opt/{{ item }}
+      state=directory
+      mode=0777
   with_items:
-    - src
-    - pkg
-    - gocode
-    - sv
-    - log
+      - src
+      - pkg
+      - gocode
+      - sv
+      - log
 
 - name: create /opt/secrets
   file: >
-    path=/opt/secrets
-    state=directory
-    mode=0700
+      path=/opt/secrets
+      state=directory
+      mode=0700
 
 - include: packages.yml
   sudo: true

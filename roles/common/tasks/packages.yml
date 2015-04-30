@@ -18,6 +18,7 @@
       regexp=^mirrorlist=https
       replace=mirrorlist=http
 
+# does not install nginx, only installs the repo to pull it from
 - name: add nginx repo
   copy: >
       src=nginx.conf
@@ -26,6 +27,7 @@
       group=root
       mode=644
 
+# does not install runit, only installs the repo to pull it from
 - name: add runit repo
   copy: >
       src=runit.repo
@@ -39,17 +41,17 @@
       name={{ item }}
       state=present
   with_items:
-   - unzip
-   - htop
-   - tmux
-   - ferm
-   - tree
-   - vim
-   - runit
-   - golang
-   - mercurial
-   - python-httplib2
-   - logwatch
+      - unzip
+      - htop
+      - tmux
+      - ferm
+      - tree
+      - vim
+      - runit
+      - golang
+      - mercurial
+      - python-httplib2
+      - logwatch
 
 - name: set logwatch email
   template: >

@@ -30,7 +30,7 @@
       - ruby
       #- vecnet
 
-- name: Install standalone
+- name: Setup standalone
   hosts:
     - standalone
   sudo: yes
@@ -52,7 +52,6 @@
 # The geosuite role needs some adjustement
 # to configure the geoserver (it needs to
 # change the redirect address and port)
-#
 #- name: Install geoserver
 #  hosts: geoserver
 #  sudo: yes
