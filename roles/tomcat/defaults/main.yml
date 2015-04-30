@@ -1,0 +1,5 @@
+---
+# be careful with this....tomcat won't start
+# if it is too small ( <512m ?)
+java_start_size: 2G
+
