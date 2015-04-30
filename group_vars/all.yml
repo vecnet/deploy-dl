@@ -1,0 +1,34 @@
+---
+open_redis_port: false
+ansible_ssh_user: vagrant
+
+discovery_branch: qa-deploy
+vecnet_branch: master
+rails_env: jcu
+
+# define either pubtkt_private_key_file if the file is in /opt/secrets
+# or pubtkt_private_key if we have the contents of the key file
+# pubtkt_public_key_file:
+pubtkt_public_key:
+rails_secret_token: "{{ vault_rails_secret_token }}"
+
+use_ssl: false
+restrict_access: false
+
+fedora_admin_password: "{{ vault_fedora_admin_password }}"
+
+# postgres password for the repository application
+vecnet_db_pass: "{{ vault_vecnet_db_pass }}"
+vecnet_db_pass_md5: "{{ vault_vecnet_db_pass_md5 }}"
+
+# postgres password for the discovery application
+discovery_db_pass: "{{ vault_discovery_db_pass }}"
+discovery_db_pass_md5: "{{ vault_discovery_db_pass_md5 }}"
+
+# postgres password for fedora
+fedora_db_pass: "{{ vault_fedora_db_pass }}"
+fedora_db_pass_md5: "{{ vault_fedora_db_pass_md5 }}"
+
+
+# this is for standalone builds, production should override this
+db_hostname: localhost

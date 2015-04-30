@@ -1,2 +1,5 @@
 [standalone]
 dl-vecnet-qa.crc.nd.edu
+
+[qa:children]
+standalone

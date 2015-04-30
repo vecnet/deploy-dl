@@ -9,3 +9,9 @@
 
 [standalone]
 192.168.33.13
+
+[local:children]
+main
+workers
+geoserver
+standalone

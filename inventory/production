@@ -6,3 +6,8 @@ dl-vecnet-w1.crc.nd.edu
 
 [geoserver]
 vecnet-geoserver.crc.nd.edu
+
+[production:children]
+main
+workers
+geoserver
