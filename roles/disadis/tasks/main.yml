@@ -34,14 +34,6 @@
       group=app
       mode=664
 
-- name: copy ssl key
-  command: cp -RPp /opt/secrets/{{ pubtkt_private_key }} /opt/sv/disadis/{{ pubtkt_private_key }}
-  when: pubtkt_private_key is defined
-
-- name: fix permissions
-  command: "chown app:app /opt/sv/disadis/{{ pubtkt_private_key }}"
-  when: pubtkt_private_key is defined
-
 - name: install service
   file: >
       src=/opt/sv/disadis

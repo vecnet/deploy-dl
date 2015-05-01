@@ -1,9 +1,12 @@
 #!/bin/bash
 
+{% if disadis_finish_email is defined %}
 MAILTO={{ disadis_finish_email }}
 
 mail -s "disadis $(hostname)" $MAILTO <<EOF
 On $(date) disadis exited with codes:
 $*
 EOF
-
+{% else %}
+# disadis_finish_email was not defined
+{% end %}

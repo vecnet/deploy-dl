@@ -9,11 +9,11 @@ prefix      = vecnet:
 datastream  = content
 versioned   = true
 
-{% if pubtkt_private_key is defined %}
+{% if pubtkt_public_key is defined %}
 auth        = true
 
 [Pubtkt]
-key-file = /opt/sv/disadis/{{ pubtkt_private_key }}
+key-file = {{ pubtkt_public_key }}
 {% endif %}
 
 [Handler "thumb"]

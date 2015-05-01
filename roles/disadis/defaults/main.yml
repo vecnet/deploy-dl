@@ -1,9 +1,16 @@
 ---
-disadis_finish_email: dbrower@nd.edu
+# If defined, this is an email to send any finish email to (for when the
+# process ends or quits)
+#disadis_finish_email:
+
+# who to access fedora as. Assumes fedora is on the local host, port 8081
 fedora_user: fedoraAdmin
 fedora_password: fedoraAdmin
+
+# port to listen to
 disadis_port: 4000
 
-# define this if there is a private key to validate pubtkts
-# then we will look for this file in /opt/secrets/
-# pubtkt_private_key: pubtkt_private.pem
+# Define this if there is a key to validate pubtkts.
+# It should be an absolute path to a pem file holding the pubtkt public key
+#
+# pubtkt_public_key: pubtkt_public.pem
