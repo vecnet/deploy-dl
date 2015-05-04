@@ -13,4 +13,4 @@ disadis_port: 4000
 # Define this if there is a key to validate pubtkts.
 # It should be an absolute path to a pem file holding the pubtkt public key
 #
-# pubtkt_public_key: pubtkt_public.pem
+# pubtkt_public_key_path: /opt/secrets/pubtkt_public.pem

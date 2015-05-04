@@ -20,10 +20,10 @@ admin_email:
 # e.g. /etc/nginx/20140403.vecnet.org.crt
 # and /etc/nginx/20140403.vecnet.org.key
 ssl_cert_path:
-ssl_cert_key_path:
+ssl_key_path:
 restrict_access: false
 
-fedora_admin_password: "{{ vault_fedora_admin_password }}"
+fedora_password: "{{ vault_fedora_password }}"
 
 # postgres password for the repository application
 vecnet_db_pass: "{{ vault_vecnet_db_pass }}"

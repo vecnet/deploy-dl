@@ -11,12 +11,6 @@
       - sv
       - log
 
-- name: create /opt/secrets
-  file: >
-      path=/opt/secrets
-      state=directory
-      mode=0700
-
 - include: packages.yml
   sudo: true
 
