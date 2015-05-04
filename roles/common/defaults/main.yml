@@ -1,4 +1,4 @@
 ---
 # define this to set an email to set logs to
-# logwatch_email:
+logwatch_email: "{{ admin_email }}"
 

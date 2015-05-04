@@ -1,5 +1,4 @@
 ---
 fedora_version: 3.6.2
 fedora_cache_url: https://dl.vecnet.org/i
-fedora_db_server: 127.0.0.1
 fedora_storage_path: /opt/fedora/data

@@ -3,6 +3,6 @@ discovery_deploy_root: /opt/vecnet-discovery
 rails_env: development
 solr_service_addr: http://localhost:8081/solr
 db_hostname: localhost
-db_name: vecnet_db
-db_user: vecnet
-db_password: test
+discovery_db_name: discovery_db
+discovery_db_user: discovery
+discovery_db_pass: XXX

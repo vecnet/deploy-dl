@@ -4,6 +4,6 @@
   pool: 5
   timeout: 5000
   host: {{ db_hostname }}
-  database: discovery_db
-  username: discovery
+  database: {{ discovery_db_name }}
+  username: {{ discovery_db_user }}
   password: {{ discovery_db_pass }}

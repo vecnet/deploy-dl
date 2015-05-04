@@ -6,7 +6,7 @@ backup_host: q0096.qcloud.qcif.edu.au
 backup_user: Q0096-RW
 
 # email to use in case of errors
-backup_email: dbrower@nd.edu
+backup_email: "{{ admin_email }}"
 
 # place to put backup log file
 backup_log_file: /home/app/dl-rsync.log

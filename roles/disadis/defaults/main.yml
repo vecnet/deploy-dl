@@ -1,7 +1,7 @@
 ---
 # If defined, this is an email to send any finish email to (for when the
 # process ends or quits)
-#disadis_finish_email:
+disadis_finish_email: "{{ admin_email }}"
 
 # who to access fedora as. Assumes fedora is on the local host, port 8081
 fedora_user: fedoraAdmin

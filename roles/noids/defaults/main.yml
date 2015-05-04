@@ -1,2 +1,2 @@
 ---
-noids_finish_email: dbrower@nd.edu
+noids_finish_email: "{{ admin_email }}"

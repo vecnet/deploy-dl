@@ -1,6 +1,6 @@
 #!/bin/bash
 
-{% if disadis_finish_email is defined %}
+{% if disadis_finish_email %}
 MAILTO={{ disadis_finish_email }}
 
 mail -s "disadis $(hostname)" $MAILTO <<EOF
@@ -9,4 +9,4 @@ $*
 EOF
 {% else %}
 # disadis_finish_email was not defined
-{% end %}
+{% endif %}

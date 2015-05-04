@@ -46,9 +46,11 @@
       - initializers/secret_token.rb
       - solr.yml
 
+# TODO: point the application to the pubtkt file
+#
 #- name: Install pubtkt public key file
-#command: cp -Pp /opt/secrets/{{ pubtkt_public_key_file }} {{ vecnet_deploy_root }}/config/pubtkt.pem
-#  when: pubtkt_public_key_file is defined
+#command: cp -Pp {{ pubtkt_public_key_path }} {{ vecnet_deploy_root }}/config/pubtkt.pem
+#  when: pubtkt_public_key_path
 #
 #- name: Copy pubtkt public key
 #  copy: >
