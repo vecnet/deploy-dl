@@ -68,6 +68,16 @@
       regexp=secret_key
       line="Blacklight.secret_key = \"{{ rails_secret_token }}\""
 
+- name: Point application to pubtkt key
+  lineinfile: >
+      dest={{ release_dir }}/config/environments/{{ item }}
+      regexp='pubtkt_key_file\s*='
+      line="pubtkt_key_file = \"{{ pubtkt_public_key_path }}\""
+      state=present
+  with_items:
+      - production.rb
+      - qa.rb
+
 - name: bundle install
   shell: su app -c "source /etc/profile.d/chruby.sh
     && chruby 2.0.0-p353

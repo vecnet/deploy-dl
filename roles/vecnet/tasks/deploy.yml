@@ -46,27 +46,15 @@
       - initializers/secret_token.rb
       - solr.yml
 
-# TODO: point the application to the pubtkt file
-#
-#- name: Install pubtkt public key file
-#command: cp -Pp {{ pubtkt_public_key_path }} {{ vecnet_deploy_root }}/config/pubtkt.pem
-#  when: pubtkt_public_key_path
-#
-#- name: Copy pubtkt public key
-#  copy: >
-#      contents={{ pubtkt_public_key }}
-#      dest={{ release_dir }}/config/pubtkt.pem
-#      owner=app
-#      group=app
-#      mode=444
-#  when: pubtkt_public_key is defined
-#
-#- name: set pubtkt permissions
-#  file: >
-#      dest={{ release_dir }}/config/pubtkt.pem
-#      owner=app
-#      group=app
-#      mode=444
+- name: Point application to pubtkt key
+  lineinfile: >
+      dest={{ release_dir }}/config/environments/{{ item }}
+      regexp='pubtkt_key_file\s*='
+      line="pubtkt_key_file = \"{{ pubtkt_public_key_path }}\""
+      state=present
+  with_items:
+      - production.rb
+      - qa.rb
 
 - name: bundle install
   shell: >
