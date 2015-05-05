@@ -21,6 +21,7 @@ admin_email:
 # and /etc/nginx/20140403.vecnet.org.key
 ssl_cert_path:
 ssl_key_path:
+site_fqdn: "{{ ansible_hostname }}"
 restrict_access: false
 
 fedora_password: "{{ vault_fedora_password }}"

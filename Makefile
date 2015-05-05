@@ -19,6 +19,6 @@ echo:
 #
 # the patsubst will only add a -l option if any hosts have been declared. Otherwise Ansible will run the play for every host declared in the inventory.
 deploy:
-	ansible-playbook playbook.yml -i inventory/$(ENVIRONMENT) --ask-vault-pass $(patsubst %,-l %,$(HOSTS))
+	ansible-playbook playbook.yml -i inventory/$(ENVIRONMENT) --ask-vault-pass $(patsubst %,-l %,$(HOSTS)) $(EXTRA)
 
 .PHONY: $(ENV_LIST) standalone echo deploy

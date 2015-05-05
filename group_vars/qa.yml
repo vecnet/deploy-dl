@@ -1,0 +1,20 @@
+---
+ansible_ssh_user: deploy
+
+# rails configurations
+discovery_branch: qa-deploy
+vecnet_branch: master
+rails_env: qa
+
+# define pubtkt_public_key_path to be a path to the key file
+# or pubtkt_public_key if we have the contents of the key file
+pubtkt_public_key_path: /opt/certs/pubtkt-qa.pem
+
+# list of email address to send server admin email to
+# (There are more configuration options in each role, grep for _email)
+admin_email: dbrower@nd.edu
+
+site_fqdn: dl-dev.vecnet.org
+ssl_cert_path: /opt/certs/20150330.vecnet.org.crt
+ssl_key_path: /opt/certs/20140403.vecnet.org.key
+restrict_access: false

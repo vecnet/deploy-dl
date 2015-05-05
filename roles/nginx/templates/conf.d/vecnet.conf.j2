@@ -9,16 +9,16 @@ upstream discovery {
 }
 server {
     listen 80 default_server;
-    server_name {{ domain }};
+    server_name {{ site_fqdn }};
 
 {% if ssl_cert_path %}
     location / {
-        return 301 https://{{ domain }}$request_uri;
+        return 301 https://{{ site_fqdn }}$request_uri;
     }
 }
 server {
     listen 443 ssl default_server deferred;
-    server_name          {{ domain }};
+    server_name          {{ site_fqdn }};
     ssl_certificate      {{ ssl_cert_path }};
     ssl_certificate_key  {{ ssl_key_path }};
     ssl_session_cache    shared:SSL:1m;
