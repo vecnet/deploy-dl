@@ -21,4 +21,8 @@ echo:
 deploy:
 	ansible-playbook playbook.yml -i inventory/$(ENVIRONMENT) --ask-vault-pass $(patsubst %,-l %,$(HOSTS)) $(EXTRA)
 
-.PHONY: $(ENV_LIST) standalone echo deploy
+reindex:
+	ansible-playbook reindex-everything.yml -i inventory/$(ENVIRONMENT) --ask-vault-pass $(patsubst %,-l %,$(HOSTS)) $(EXTRA)
+
+
+.PHONY: $(ENV_LIST) standalone echo deploy reindex

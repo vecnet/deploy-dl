@@ -1,0 +1,29 @@
+---
+# reindex everything starting from fedora
+- name: Reindex everything
+  hosts:
+    - main
+    - standalone
+  sudo_user: app
+  tasks:
+      - name: Index fedora into vecnet solr
+        shell: >
+          source /etc/profile.d/chruby.sh
+          && chruby 2.0.0-p353
+          && exec bundle exec rake RAILS_ENV={{ rails_env }} solrizer:fedora:solrize_objects
+          chdir=/opt/vecnet-dl/current
+      - name: Index vecnet solr into discovery solr
+        shell: >
+          source /etc/profile.d/chruby.sh
+          && chruby 2.0.0-p353
+          && exec bundle exec ./script/harvest-dl.rb https://{{ site_fqdn }} http://localhost:8081/solr/discovery
+          chdir=/opt/vecnet-discovery/current
+      - name: Index simulations into discovery solr
+        shell: >
+          source /etc/profile.d/chruby.sh
+          && chruby 2.0.0-p353
+          && exec bundle exec ./script/harvest-ci.rb https://ci-qa.vecnet.org https://dl.vecnet.org http://localhost:8081/solr/discovery
+          chdir=/opt/vecnet-discovery/current
+
+
+
