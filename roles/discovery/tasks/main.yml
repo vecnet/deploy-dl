@@ -106,3 +106,22 @@
 - name: start server on startup
   command: /sbin/chkconfig vecnet-discovery on
 
+# This runs every five minutes
+- name: install DL harvest cron job
+  cron: >
+      name="discovery dl harvest"
+      user=app
+      state=present
+      minute=*/5
+      job="/opt/vecnet-discovery/current/script/harvest-cron-job.sh dl"
+
+# this runs once a day
+- name: install CI harvest cron job
+  cron: >
+      name="discovery ci harvest"
+      user=app
+      state=present
+      hour=0
+      minute=30
+      job="/opt/vecnet-discovery/current/script/harvest-cron-job.sh ci"
+

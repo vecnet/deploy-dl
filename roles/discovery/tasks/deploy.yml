@@ -68,6 +68,12 @@
       regexp=secret_key
       line="Blacklight.secret_key = \"{{ rails_secret_token }}\""
 
+- name: bundle install
+  shell: su app -c "source /etc/profile.d/chruby.sh
+    && chruby 2.0.0-p353
+    && exec bundle install --gemfile {{ release_dir }}/Gemfile --path {{ discovery_deploy_root }}/shared/bundle --deployment --without \"development test\""
+    chdir={{ release_dir }}
+
 - name: Point application to pubtkt key
   lineinfile: >
       dest={{ release_dir }}/config/environments/{{ item }}
@@ -78,12 +84,15 @@
       - production.rb
       - qa.rb
 
-- name: bundle install
-  shell: su app -c "source /etc/profile.d/chruby.sh
-    && chruby 2.0.0-p353
-    && exec bundle install --gemfile {{ release_dir }}/Gemfile --path {{ discovery_deploy_root }}/shared/bundle --deployment --without \"development test\""
-    chdir={{ release_dir }}
-
+- name: update cron job settings
+  lineinfile: >
+      dest={{ release_dir }}/script/harvest-cron-job.sh
+      regexp={{ item.re }}
+      line={{ item.line }}
+      state=present
+  with_items:
+      - { re: DL_SOURCE=, line: "DL_SOURCE=\"https://{{ site_fqdn }}\"" }
+      - { re: CI_SOURCE=, line: "CI_SOURCE=\"https://ci-qa.vecnet.org\"" }
 
 - name: write_build_identifier
   shell: date '+%Y%m%d %H:%M:%S' > {{ release_dir }}/config/bundle-identifier.txt
