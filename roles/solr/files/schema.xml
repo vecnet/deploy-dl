@@ -196,7 +196,7 @@
   
     <!-- dl-beta sorting-->
 
-  <copyField source="dc_title_s"         dest="dc_title_sort"/>
+  <copyField source="dc_source_s"         dest="dc_source_sort"/>
   <copyField source="dc_created_sm"       dest="dc_created_sort"/>
   <copyField source="dc_date_uploaded_dt" dest="dc_date_uploaded_sort"/>
   <copyField source="dc_date_modified_dt" dest="dc_date_modified_sort"/>
