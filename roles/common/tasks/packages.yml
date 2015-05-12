@@ -52,6 +52,7 @@
       - mercurial
       - python-httplib2
       - logwatch
+      - git
 
 - name: set logwatch email
   template: >
