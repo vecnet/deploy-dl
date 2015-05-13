@@ -113,7 +113,7 @@
       user=app
       state=present
       minute=*/5
-      job="/opt/vecnet-discovery/current/script/harvest-cron-job.sh dl"
+      job="/opt/vecnet-discovery/current/script/harvest-cron-job.sh dl 1>/dev/null 2>&1"
 
 # this runs once a day
 - name: install CI harvest cron job
