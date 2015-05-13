@@ -1,4 +1,7 @@
 ---
+- name: make app user
+  user: name=app
+
 - name: install latest noids code
   command: /bin/env GOPATH=/opt/gocode /usr/bin/go get github.com/ndlib/noids
 
