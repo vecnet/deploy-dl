@@ -127,4 +127,21 @@
 - name: start workers on startup
   command: /sbin/chkconfig vecnet-worker-pool on
 
+- name: install usage stats daily cron job
+  cron: >
+      name="vecnet usage logs"
+      user=app
+      state=present
+      hour=3
+      minute=30
+      job="/opt/vecnet-dl/current/script/harvest-nginx.sh"
+
+- name: install fedora summarizer daily cron job
+  cron: >
+      name="vecnet usage logs"
+      user=app
+      state=present
+      hour=5
+      minute=15
+      job="/opt/vecnet-dl/current/script/sync_fedora_to_db.sh"
 
