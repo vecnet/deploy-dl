@@ -138,7 +138,7 @@
 
 - name: install fedora summarizer daily cron job
   cron: >
-      name="vecnet usage logs"
+      name="vecnet sync fedora to db"
       user=app
       state=present
       hour=5
