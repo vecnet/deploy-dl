@@ -1,5 +1,5 @@
 upstream vecnet {
-    server unix:/tmp/vecnet.sock.0;
+    server 127.0.0.1:6000;
 }
 upstream disadis {
     server 127.0.0.1:{{ disadis_port|d('4000') }};
