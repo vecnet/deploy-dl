@@ -134,7 +134,7 @@
       state=present
       hour=3
       minute=30
-      job="/opt/vecnet-dl/current/script/harvest-nginx.sh"
+      job="/opt/vecnet-dl/current/script/harvest_nginx.sh"
 
 - name: install fedora summarizer daily cron job
   cron: >
