@@ -19,6 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     p.memory = 2048
   end
 
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -49,6 +50,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   }.each do |short_name, ip|
     config.vm.define short_name do |host|
       host.vm.network 'private_network', ip: ip
+      config.sshfs.paths = { "/opt" => "~/remotes/vecnet" }
+
     end
   end
 end
