@@ -4,6 +4,9 @@ rails_env: development
 fedora_password: fedoraAdmin
 solr_service_addr: http://localhost:8081/solr
 db_hostname: localhost
+redis_host: localhost
+fedora_service_addr: http://localhost:8081/fedora
 vecnet_db_name: vecnet_db
 vecnet_db_user: vecnet
 vecnet_db_pass: XXX
+workers_only: false

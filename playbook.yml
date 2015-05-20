@@ -1,34 +1,36 @@
 ---
 - name: Install main
   hosts:
-    - main
+      - main
   sudo: yes
   roles:
-    - common
-    - postgres
-    - redis
-      #- tomcat
-      #- solr
-      #- nginx
-      #- discovery
-      #- vecnet
-      #
-      # - fedora?
-      # - disadis
-      # - noids
-      # - runit
-      # - backup rsync
-      #
+      - common
+      - postgres
+      - redis
+      - tomcat
+      - solr
+      - fedora
+      - nginx
+      - redis
+      - fits
+      - noids
+      - ruby
+      - discovery
+      - vecnet
+      - disadis
+      - backup-client
 
 - name: Install workers
   hosts:
-    - workers
+      - workers
   sudo: yes
+  vars:
+      workers_only: true
   roles:
       - common
       - fits
       - ruby
-      #- vecnet
+      - vecnet
 
 - name: Setup standalone
   hosts:

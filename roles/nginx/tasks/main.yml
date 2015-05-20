@@ -41,3 +41,10 @@
     name=nginx
     enabled=yes
     state=started
+
+# ensure the app can parse the logs
+- name: adjust nginx logrotate
+  lineinfile: >
+    dest=/etc/logrotate.d/nginx
+    state=absent
+    regexp=create

@@ -91,10 +91,12 @@
 - name: restart unicorn
   command: "{{ vecnet_deploy_root }}/current/script/reload-unicorn.sh"
   sudo_user: app
+  when: not workers_only
 
-#- name: restart workers
-#  shell: su app -c "{{ vecnet_deploy_root }}/current/script/stop-pool.sh && {{ vecnet_deploy_root }}/current/script/start-pool.sh"
-#
+- name: restart workers
+  command: "{{ vecnet_deploy_root }}/current/script/reload-workers.sh"
+  sudo_user: app
+  when: workers_only
 
 - name: link assets directory
   file: >
@@ -104,6 +106,7 @@
     owner=nginx
     group=nginx
     mode=755
+  when: not workers_only
 
 - name: install log rotate
   template: >
@@ -123,9 +126,11 @@
 
 - name: start server on startup
   command: /sbin/chkconfig vecnet-server on
+  when: not workers_only
 
 - name: start workers on startup
   command: /sbin/chkconfig vecnet-worker-pool on
+  when: workers_only
 
 - name: install usage stats daily cron job
   cron: >
@@ -135,6 +140,7 @@
       hour=3
       minute=30
       job="/opt/vecnet-dl/current/script/harvest_nginx.sh"
+  when: not workers_only
 
 - name: install fedora summarizer daily cron job
   cron: >
@@ -144,4 +150,5 @@
       hour=5
       minute=15
       job="/opt/vecnet-dl/current/script/sync_fedora_to_db.sh"
+  when: not workers_only
 
