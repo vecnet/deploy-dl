@@ -46,6 +46,7 @@
     - shared/config
     - shared/log
     - shared/pids
+    - shared/var
     - shared/system
 
 - name: check out code
