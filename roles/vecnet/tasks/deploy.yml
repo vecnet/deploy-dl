@@ -93,6 +93,14 @@
     group=app
     mode=644
 
+- name: make discovery user
+  shell: >
+      source /etc/profile.d/chruby.sh
+      && chruby 2.0.0-p353
+      && exec bundle exec rake RAILS_ENV={{ rails_env }} UID=d_harvest APIKEY={{ d_harvest_api_key }} GROUP_LIST=dl_librarian vecnet:set_api_key
+      chdir={{ release_dir }}
+  sudo_user: app
+
 - name: only keep last 6 deploys
   shell: >
       ls -1dt {{ vecnet_deploy_root }}/releases/* | tail -n +6 |  xargs rm -rf

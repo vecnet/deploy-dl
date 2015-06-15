@@ -7,6 +7,8 @@ vecnet_branch: master
 rails_env: jcu
 rails_secret_token: "{{ vault_rails_secret_token }}"
 
+d_harvest_api_key: "{{ vault_d_harvest_api_key }}"
+
 # define pubtkt_public_key_path to be a path to the key file
 # or pubtkt_public_key if we have the contents of the key file
 pubtkt_public_key_path:
@@ -34,7 +36,6 @@ discovery_db_pass: "{{ vault_discovery_db_pass }}"
 
 # postgres password for fedora
 fedora_db_pass: "{{ vault_fedora_db_pass }}"
-
 
 # this is for standalone builds, production should override this
 db_hostname: localhost
