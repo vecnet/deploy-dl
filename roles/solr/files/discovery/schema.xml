@@ -193,11 +193,14 @@
   <copyField source="dct_provenance_s"   dest="dct_provenance_sort"/>
   <copyField source="dc_publisher_s"     dest="dc_publisher_sort"/>
   <copyField source="dc_title_s"         dest="dc_title_sort"/>
-  
-    <!-- dl-beta sorting-->
+
+  <!-- dl-beta sorting-->
 
   <copyField source="dc_source_s"         dest="dc_source_sort"/>
-  <copyField source="dc_created_sm"       dest="dc_created_sort"/>
+  <!-- Morally we want to copyfield dc_created_sm into dc_created_sort, but since
+       dc_created_sm is multivalued, it won't work. Instead we must pass in a (single)
+       value for dc_created_sort when we add the record to solr. :( -->
+  <!-- <copyField source="dc_created_sm"       dest="dc_created_sort"/> -->
   <copyField source="dc_date_uploaded_dt" dest="dc_date_uploaded_sort"/>
   <copyField source="dc_date_modified_dt" dest="dc_date_modified_sort"/>
 
