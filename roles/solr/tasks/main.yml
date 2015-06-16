@@ -151,7 +151,7 @@
 
 - name: Copy discovery solr config
   copy: >
-    src={{ item }}
+    src=discovery/{{ item }}
     dest=/opt/solr/discovery/conf/{{ item }}
     owner=tomcat
     group=tomcat
