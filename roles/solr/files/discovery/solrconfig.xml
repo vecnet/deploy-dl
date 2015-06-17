@@ -102,30 +102,32 @@
       <str name="sort">score desc, dc_title_sort asc</str>
       <str name="q.alt">*:*</str>
       <str name="qf">
-        text^1
-        dc_description_ti^2
-        dc_rights_ti^2
-        dc_creator_tmi^3
-        dc_publisher_ti^3
-        dc_subject_tmi^5
-        dct_spatial_tmi^5
-        dct_temporal_tmi^5
-        dc_title_ti^6
-        layer_slug_ti^10
-        vn_child_records_tmi^10
-        dc_identifier_ti^10
+        full_text
+        text^10
+        dc_description_ti^20
+        dc_rights_ti^20
+        dc_creator_tmi^20
+        dc_publisher_ti^20
+        dct_spatial_tmi^20
+        dct_temporal_tmi^20
+        dc_subject_tmi^30
+        dc_title_ti^50
+        layer_slug_ti^100
+        vn_child_records_tmi^100
+        dc_identifier_ti^100
       </str>
       <str name="pf"><!-- phrase boost within result set -->
-        text^1
-        dc_description_ti^2
-        dc_creator_tmi^3
-        dc_publisher_ti^3
-        dc_subject_tmi^5
-        dct_spatial_tmi^5
-        dct_temporal_tmi^5
-        dc_title_ti^6
-        layer_slug_ti^10
-        dc_identifier_ti^10
+        full_text
+        text^10
+        dc_description_ti^20
+        dc_creator_tmi^20
+        dc_publisher_ti^20
+        dct_spatial_tmi^20
+        dct_temporal_tmi^20
+        dc_subject_tmi^30
+        dc_title_ti^50
+        layer_slug_ti^100
+        dc_identifier_ti^100
       </str>
       <bool name="facet">true</bool>
       <int name="facet.mincount">1</int>
