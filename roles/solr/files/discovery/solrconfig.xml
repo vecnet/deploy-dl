@@ -111,6 +111,8 @@
         dct_spatial_tmi^20
         dct_temporal_tmi^20
         dc_subject_tmi^30
+        vn_keyword_tmi^30
+        dwc_scientificname_tmi^30
         dc_title_ti^50
         layer_slug_ti^100
         vn_child_records_tmi^100
@@ -125,6 +127,8 @@
         dct_spatial_tmi^20
         dct_temporal_tmi^20
         dc_subject_tmi^30
+        vn_keyword_tmi^30
+        dwc_scientificname_tmi^30
         dc_title_ti^50
         layer_slug_ti^100
         dc_identifier_ti^100
