@@ -48,6 +48,7 @@
       - { src: system,  target: public/system }
       - { src: log,     target: log }
       - { src: pids,    target: tmp/pids }
+      - { src: indexing, target: tmp/indexing }
 
 - name: Install config files
   template: >
