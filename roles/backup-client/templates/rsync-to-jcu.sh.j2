@@ -4,6 +4,8 @@ EMAIL=""
 LOGFILE={{ backup_log_file }}
 TEMPFILE=$(mktemp)
 FEDORA_DATA_PATH=/opt/fedora/data
+# this is just until we get the data into the DL...
+LARGE_DATA_IO_PATH=/data/io
 
 # redirect stdout and stderr to the log file
 # http://www.xensoft.com/content/use-exec-direct-all-bash-script-output-file-syslog-or-other-command
@@ -12,10 +14,17 @@ exec 1> $TEMPFILE 2>&1
 echo $(date "+%Y-%m-%d %H:%M:%S") "========== Starting rsync"
 # give full path to time so we don't get the shell builtin
 /usr/bin/time rsync -ztrp --stats $FEDORA_DATA_PATH {{ backup_user }}@{{ backup_host }}:dl
-status=$?
-echo $(date "+%Y-%m-%d %H:%M:%S") "Finished rsync, status $status"
+status_one=$?
+/usr/bin/time rsync -ztrp --stats $LARGE_DATA_IO_PATH {{ backup_user }}@{{ backup_host }}:dl/large-item
+status_two=$?
+echo $(date "+%Y-%m-%d %H:%M:%S") "Finished rsync, status $status_one + $status_two"
 
-if [ -n "$EMAIL" -o $status -ne 0 ]; then
+status=0
+if [ $status_one -ne 0 -o $status_two -ne 0 ]; then
+    status=1
+fi
+
+if [ -n "$EMAIL" -a $status -ne 0 ]; then
     mail -s "Vecnet DL Rsync" $EMAIL < $TEMPFILE
 fi
 
