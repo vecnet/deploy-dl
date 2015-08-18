@@ -1,0 +1,65 @@
+backup_email   ( cron error email for backup to jcu task )
+backup_log_file
+backup_user
+backup_host
+(make backup_email optional)
+(backup ssh keys???)
+logwatch_email
+disadis_finish_email
+fedora_user: fedoraAdmin
+fedora_password: fedoraAdmin
+disadis_port: 4000
+pubtkt_public_key: pubtkt_public.pem
+rails_env:
+db_hostname:
+discovery_db_pass:
+discovery_deploy_root:
+solr_service_addr:
+rails_secret_token
+ruby_version
+discovery_branch
+fedora_cache_url  (== https://dl.vecnet.org/i)
+fedora_version
+fedora_storage_path
+fedora_db_pass
+domain
+fedora_admin_password
+fits_cache_url    (== https://dl.vecnet.org/i)
+fits_version
+restrict_access   (in nginx configuration)
+(nginx...configure robots.txt)
+use_ssl
+noids_finish_email
+(backup noids state file?)
+(configure noids file system placement)
+vecnet_db_pass_md5
+discovery_db_pass_md5
+fedora_db_pass_md5
+(update to ansible 1.9 and use md5 hash function in ansible playbook)
+open_redis_port
+chruby_cache_url    (== https://dl.vecnet.org/i/chruby-{{ }}.tar.gz )
+chruby_version
+ruby_version
+solr_cache_url
+solr_version
+(reorg ansible solr file. put discovery in its own directory like vecnet)
+java_start_size
+vecnet_deploy_root
+vecnet_branch
+rails_env
+db_hostname
+db_name         ( for vecnet app)
+db_user         ( for vecnet app)
+vecnet_db_pass
+fedora_password  (for user "fedoraAdmin")
+(vecnet has fedora hardcoded at http://localhost:8081/fedora)
+solr_service_addr
+rails_secret_token
+ruby_version
+
+
+(vecnet pubtkt public key needs to be installed/configured)
+(workers???)
+
+
+

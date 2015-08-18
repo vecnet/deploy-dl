@@ -103,6 +103,7 @@
   template: >
       src=vecnet-discovery.j2
       dest=/etc/init.d/vecnet-discovery
+      mode=655
 
 - name: start server on startup
   command: /sbin/chkconfig vecnet-discovery on

@@ -6,6 +6,7 @@
     state=installed
   with_items:
     - java-1.7.0-openjdk
+    - java-1.7.0-openjdk-devel
     - tomcat6
 
 - name: Update port to 8081

@@ -18,7 +18,7 @@ case "$1" in
         exit 1
         ;;
     restart|reload|configtest|reopen_logs)
-        su -l -c 'cd {{ discovery_deploy_root }}/vecnet/current && ./script/reload-unicorn.sh' app 
+        su -l -c 'cd {{ discovery_deploy_root }}/current && ./script/reload-unicorn.sh' app 
         ;;
     status|status_q|condrestart|try-restart)
         echo "Not implemented: $1"

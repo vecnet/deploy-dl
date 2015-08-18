@@ -21,8 +21,8 @@ ssl_cert_path: /opt/certs/20150330.vecnet.org.crt
 ssl_key_path: /opt/certs/20140403.vecnet.org.key
 restrict_access: false
 
-db_hostname: dl-vecnet.crc.nd.edu
-solr_service_addr: dl-vecnet.crc.nd.edu:8081/solr
-redis_host: dl-vecnet.crc.nd.edu
-fedora_service_addr: http://dl-vecnet.crc.nd.edu:8081/fedora
+db_hostname: localhost
+solr_service_addr: http://localhost:8081/solr
+redis_host: localhost
+fedora_service_addr: http://localhost:8081/fedora
 

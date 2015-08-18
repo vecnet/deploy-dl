@@ -1,13 +1,17 @@
-[main]
+[standalone]
 dl-vecnet.crc.nd.edu
 
-[workers]
-dl-vecnet-w1.crc.nd.edu
+#[workers]
+#dl-vecnet-w1.crc.nd.edu
 
-[geoserver]
-vecnet-geoserver.crc.nd.edu
+#[geoserver]
+#vecnet-geoserver.crc.nd.edu
+
+[dataserver]
+dl-vecnet.crc.nd.edu
 
 [production:children]
-main
-workers
-geoserver
+standalone
+#main
+#workers
+#geoserver

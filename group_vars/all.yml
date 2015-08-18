@@ -29,6 +29,7 @@ restrict_access: false
 fedora_password: "{{ vault_fedora_password }}"
 
 # postgres password for the repository application
+vecnet_db_name: vecnet_db
 vecnet_db_pass: "{{ vault_vecnet_db_pass }}"
 
 # postgres password for the discovery application
