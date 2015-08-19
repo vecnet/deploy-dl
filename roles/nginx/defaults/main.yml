@@ -3,3 +3,5 @@ rails_env: development
 domain:    localhost
 ssl_cert_path:
 ssl_cert_key_path:
+robots_disallow:
+    - /

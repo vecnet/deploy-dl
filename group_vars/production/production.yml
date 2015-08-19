@@ -6,6 +6,11 @@ discovery_branch: qa-deploy
 vecnet_branch: master
 rails_env: production
 
+robots_disallow:
+    - /downloads/
+    - /admin/
+    - /bookmarks/
+
 # define pubtkt_public_key_path to be a path to the key file
 # or pubtkt_public_key if we have the contents of the key file
 pubtkt_public_key_path: /opt/certs/pubtkt-qa.pem
