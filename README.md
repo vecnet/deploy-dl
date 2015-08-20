@@ -31,3 +31,10 @@ Then to provision the QA environment run the following
 To deploy to production
 
     $ make production deploy
+
+### Setting up an environment for deployment
+
+ 1. Create a deploy user.
+ 2. Put your public ssh key in the deploy user's `authorized_keys` file
+ 3. Put the TLS keys into `/etc/certs/`
+ 4. Put the pubtkt key in `/etc/certs/`
