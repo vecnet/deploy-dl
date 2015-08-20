@@ -37,7 +37,9 @@ server {
         expires 1y;
         add_header Cache-Control public;
         add_header ETag "";
-        try_files /assets-discovery/$uri /assets-vecnet/$uri $uri;
+        # these directories are symlinked into /opt/www by the
+        # application deploys
+        try_files /assets-discovery/$uri /assets-vecnet/$uri;
         break;
     }
 
