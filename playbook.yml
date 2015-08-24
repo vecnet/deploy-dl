@@ -5,6 +5,7 @@
   sudo: yes
   roles:
       - common
+      - tarcache
       - postgres
       - redis
       - tomcat

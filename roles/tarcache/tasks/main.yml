@@ -13,26 +13,24 @@
   file: >
       path=/opt/www/i
       state=directory
+      owner=nginx
+      group=nginx
+      mode=555
 
 - name: download files
   get_url:
       url={{ item.url }}
       dest=/opt/www/i/{{ item.dest }}
+      owner=nginx
+      group=nginx
+      mode=444
   with_items:
-      - {
-          dest: solr-{{ solr_version }}.tgz,
-          url: http://apache.mirrors.lucidnetworks.net/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz
-        }
-      - {
-          dest: fcrepo-installer-{{ fedora_version }}.jar,
-          url: http://repo1.maven.org/maven2/org/fcrepo/fcrepo-installer/{{ fedora_version }}/fcrepo-installer-{{ fedora_version }}.jar
-        }
-      - {
-          dest: fits-{{ fits_version }}.zip,
-          url: http://projects.iq.harvard.edu/files/fits/files/fits-{{ fits_version }}.zip
-        }
-      - {
-          dest: chruby-{{ chruby_version }}.tar.gz,
-          url: https://github.com/postmodern/chruby/archive/v{{ chruby_version }}.tar.gz
-        }
+      - dest: solr-{{ solr_version }}.tgz
+        url: http://apache.mirrors.lucidnetworks.net/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz
+      - dest: fcrepo-installer-{{ fedora_version }}.jar
+        url: http://repo1.maven.org/maven2/org/fcrepo/fcrepo-installer/{{ fedora_version }}/fcrepo-installer-{{ fedora_version }}.jar
+      - dest: fits-{{ fits_version }}.zip
+        url: http://projects.iq.harvard.edu/files/fits/files/fits-{{ fits_version }}.zip
+      - dest: chruby-{{ chruby_version }}.tar.gz
+        url: https://github.com/postmodern/chruby/archive/v{{ chruby_version }}.tar.gz
 
