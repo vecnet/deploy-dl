@@ -17,6 +17,6 @@ admin_email: dbrower@nd.edu
 vecnet_db_name: vecnet_qa
 
 site_fqdn: dl-dev.vecnet.org
-ssl_cert_path: /opt/certs/20150330.vecnet.org.crt
+ssl_cert_path: /opt/certs/20160401.vecnet.org.crt
 ssl_key_path: /opt/certs/20140403.vecnet.org.key
 restrict_access: false
