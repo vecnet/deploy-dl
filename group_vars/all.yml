@@ -2,7 +2,7 @@
 open_redis_port: false
 ansible_ssh_user: vagrant
 
-discovery_branch: qa-deploy
+discovery_branch: master
 vecnet_branch: master
 rails_env: jcu
 rails_secret_token: "{{ vault_rails_secret_token }}"

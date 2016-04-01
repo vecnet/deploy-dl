@@ -2,7 +2,7 @@
 ansible_ssh_user: deploy
 
 # rails configurations
-discovery_branch: qa-deploy
+discovery_branch: master
 vecnet_branch: master
 rails_env: production
 
