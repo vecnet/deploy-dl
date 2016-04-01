@@ -19,19 +19,28 @@
       - discovery
       - vecnet
       - disadis
+
+
+- name: Install rsync backup
+  hosts:
+      - dataserver
+  sudo: yes
+  roles:
       - backup-client
+
 
 - name: Install workers
   hosts:
       - workers
   sudo: yes
   vars:
-      workers_only: true
+      for_worker: true
   roles:
       - common
       - fits
       - ruby
       - vecnet
+
 
 - name: Setup standalone
   hosts:
