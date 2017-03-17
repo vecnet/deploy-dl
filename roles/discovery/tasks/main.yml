@@ -11,9 +11,12 @@
     - postgresql-devel
 
 - name: install bundler
-  shell: su app -c "source /etc/profile.d/chruby.sh && chruby {{ ruby_version }} && gem install bundler"
+  shell: >
+    source /etc/profile.d/chruby.sh && chruby {{ ruby_version }} && gem install bundler
     chdir=/home/app
     creates=/home/app/.gem/ruby/2.0.0/bin/bundle
+  become_user: app
+  become: yes
   # TODO: does this creates path depends on the ruby version? how to strip the patch level off the ruby_version?
 
 # capistrano-like directory layout
@@ -80,7 +83,10 @@
     state=link
 
 - name: restart unicorn
-  command: su app -c "{{ discovery_deploy_root }}/current/script/reload-unicorn.sh"
+  command: >
+      {{ discovery_deploy_root }}/current/script/reload-unicorn.sh
+  become_user: app
+  become: yes
 
 - name: link assets directory
   file: >

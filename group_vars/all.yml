@@ -1,6 +1,7 @@
 ---
 open_redis_port: false
 ansible_ssh_user: vagrant
+become_method: sudo
 
 discovery_branch: master
 vecnet_branch: master

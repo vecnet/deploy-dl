@@ -1,19 +1,19 @@
 ---
 - name: Install packages
-  sudo: yes
+  become: yes
   yum: >
     name=redis
     state=present
 
 - name: Start redis
-  sudo: yes
+  become: yes
   service: >
     name=redis
     enabled=yes
     state=started
 
 - name: open redis in firewall
-  sudo: yes
+  become: yes
   copy: >
     src=redis.ferm
     dest=/etc/ferm/ferm.d/redis.ferm

@@ -70,10 +70,13 @@
       line="Blacklight.secret_key = \"{{ rails_secret_token }}\""
 
 - name: bundle install
-  shell: su app -c "source /etc/profile.d/chruby.sh
+  shell: >
+    source /etc/profile.d/chruby.sh
     && chruby 2.0.0-p353
-    && exec bundle install --gemfile {{ release_dir }}/Gemfile --path {{ discovery_deploy_root }}/shared/bundle --deployment --without \"development test\""
+    && exec bundle install --gemfile {{ release_dir }}/Gemfile --path {{ discovery_deploy_root }}/shared/bundle --deployment --without "development test"
     chdir={{ release_dir }}
+  become_user: app
+  become: yes
 
 - name: Point application to pubtkt key
   lineinfile: >
@@ -100,16 +103,22 @@
     creates={{ release_dir }}/config/bundle-identifier.txt
 
 - name: deploy migrate
-  shell: su app -c "source /etc/profile.d/chruby.sh
+  shell: >
+    source /etc/profile.d/chruby.sh
     && chruby 2.0.0-p353
-    && exec bundle exec rake RAILS_ENV={{ rails_env }} db:migrate"
+    && exec bundle exec rake RAILS_ENV={{ rails_env }} db:migrate
     chdir={{ release_dir }}
+  become_user: app
+  become: yes
 
 - name: deploy precompile
-  shell: su app -c "source /etc/profile.d/chruby.sh
+  shell: >
+        source /etc/profile.d/chruby.sh
         && chruby 2.0.0-p353
-        && exec bundle exec rake RAILS_ENV={{ rails_env }} RAILS_GROUPS=assets assets:precompile"
+        && exec bundle exec rake RAILS_ENV={{ rails_env }} RAILS_GROUPS=assets assets:precompile
         chdir={{ release_dir }}
+  become_user: app
+  become: yes
 
 - name: vecnet:write_env_vars
   template: >

@@ -12,19 +12,19 @@
     owner=root
     group=root
     creates=/opt/src/fits-{{ fits_version }}/fits.sh
-  sudo: yes
+  become: yes
 
 - name: link fits to /opt
   file: >
     src=/opt/src/fits-{{ fits_version }}
     dest=/opt/fits
     state=link
-  sudo: yes
+  become: yes
 
 - name: make fits executable
   file: >
     path=/opt/fits/fits.sh
     state=file
     mode=0755
-  sudo: yes
+  become: yes
 

@@ -19,7 +19,7 @@
     state=directory
     owner=root
     group=root
-  sudo: yes
+  become: yes
 
 - name: download chruby
   get_url: >

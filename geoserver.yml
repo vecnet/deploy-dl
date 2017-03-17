@@ -1,7 +1,7 @@
 ---
 - name: Install geosuite
   hosts: all
-  sudo: yes
+  become: yes
   roles:
     - common
     - geosuite

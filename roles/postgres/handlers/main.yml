@@ -1,12 +1,12 @@
 - name: restart postgresql
-  sudo: yes
+  become: yes
   service: >
     name=postgresql
     state=restarted
     enabled=yes
 
 - name: reload postgresql
-  sudo: yes
+  become: yes
   service: >
     name=postgresql
     state=reloaded

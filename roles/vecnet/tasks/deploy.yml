@@ -63,7 +63,8 @@
       && chruby 2.0.0-p353
       && exec bundle install --gemfile {{ release_dir }}/Gemfile --path {{ vecnet_deploy_root }}/shared/bundle --deployment --without development test
       chdir={{ release_dir }}
-  sudo_user: app
+  become_user: app
+  become: yes
 
 - name: write_build_identifier
   shell: date '+%Y%m%d %H:%M:%S' > {{ release_dir }}/config/bundle-identifier.txt
@@ -75,7 +76,8 @@
       && chruby 2.0.0-p353
       && exec bundle exec rake RAILS_ENV={{ rails_env }} db:migrate
       chdir={{ release_dir }}
-  sudo_user: app
+  become_user: app
+  become: yes
 
 - name: deploy precompile
   shell: >
@@ -83,7 +85,8 @@
       && chruby 2.0.0-p353
       && exec bundle exec rake RAILS_ENV={{ rails_env }} RAILS_GROUPS=assets assets:precompile
       chdir={{ release_dir }}
-  sudo_user: app
+  become_user: app
+  become: yes
 
 - name: vecnet:write_env_vars
   template: >
@@ -99,7 +102,8 @@
       && chruby 2.0.0-p353
       && exec bundle exec rake RAILS_ENV={{ rails_env }} UID=d_harvest APIKEY={{ d_harvest_api_key }} GROUP_LIST=dl_librarian vecnet:set_api_key
       chdir={{ release_dir }}
-  sudo_user: app
+  become_user: app
+  become: yes
 
 - name: only keep last 6 deploys
   shell: >

@@ -1,6 +1,6 @@
 ---
 - name: Install postgres packages
-  sudo: yes
+  become: yes
   yum: >
     name={{ item }}
     state=present
@@ -10,13 +10,13 @@
     - postgresql
 
 - name: Init postgresql
-  sudo: yes
+  become: yes
   command: >
     service postgresql initdb
     creates=/var/lib/pgsql/data/postgresql.conf
 
 - name: Update pg_hba.conf
-  sudo: yes
+  become: yes
   copy: >
     src=pg_hba.conf
     dest=/var/lib/pgsql/data/pg_hba.conf
@@ -27,7 +27,7 @@
     - reload postgresql
 
 - name: Start postgresql
-  sudo: yes
+  become: yes
   service: >
     name=postgresql
     enabled=yes

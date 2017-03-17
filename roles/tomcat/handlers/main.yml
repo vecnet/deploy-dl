@@ -1,5 +1,5 @@
 
 - name: restart tomcat
-  sudo: yes
+  become: yes
   service: name=tomcat6 state=restarted enabled=yes
 

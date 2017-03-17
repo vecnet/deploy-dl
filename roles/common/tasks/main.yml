@@ -14,7 +14,7 @@
 # make /data/io ?
 
 - include: packages.yml
-  sudo: true
+  become: true
 
 - include: ferm.yml
 

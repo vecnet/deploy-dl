@@ -2,7 +2,7 @@
 - name: Install main
   hosts:
       - main
-  sudo: yes
+  become: yes
   roles:
       - common
       - tarcache
@@ -24,7 +24,7 @@
 - name: Install rsync backup
   hosts:
       - dataserver
-  sudo: yes
+  become: yes
   roles:
       - backup-client
 
@@ -32,7 +32,7 @@
 - name: Install workers
   hosts:
       - workers
-  sudo: yes
+  become: yes
   vars:
       for_worker: true
   roles:
@@ -45,7 +45,7 @@
 - name: Setup standalone
   hosts:
     - standalone
-  sudo: yes
+  become: yes
   roles:
       - common
       - postgres

@@ -1,6 +1,6 @@
 
 - name: Install packages
-  sudo: yes
+  become: yes
   yum: >
     name={{ item }}
     state=installed
@@ -10,7 +10,7 @@
     - tomcat6
 
 - name: Update port to 8081
-  sudo: yes
+  become: yes
   replace: >
     dest=/etc/tomcat6/server.xml
     regexp='"8080"'
@@ -19,7 +19,7 @@
     - restart tomcat
 
 - name: Update java options
-  sudo: yes
+  become: yes
   template: >
     src=tomcat6.conf
     dest=/etc/tomcat6/tomcat6.conf
@@ -28,7 +28,7 @@
     mode=644
 
 - name: Start tomcat
-  sudo: yes
+  become: yes
   service: >
     name=tomcat6
     enabled=yes

@@ -22,7 +22,8 @@
   shell: source /etc/profile.d/chruby.sh && chruby {{ ruby_version }} && gem install bundler
     chdir=/home/app
     creates=/home/app/.gem/ruby/2.0.0/bin/bundle
-  sudo_user: app
+  become_user: app
+  become: yes
   # TODO: does this creates path depends on the ruby version? how to strip the patch level off the ruby_version?
 
 # capistrano-like directory layout
@@ -91,12 +92,14 @@
 
 - name: restart unicorn
   command: "{{ vecnet_deploy_root }}/current/script/reload-unicorn.sh"
-  sudo_user: app
+  become_user: app
+  become: yes
   when: not for_worker
 
 - name: restart workers
   command: "{{ vecnet_deploy_root }}/current/script/reload-workers.sh"
-  sudo_user: app
+  become_user: app
+  become: yes
   when: for_worker
 
 - name: link assets directory
