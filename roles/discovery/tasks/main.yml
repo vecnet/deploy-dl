@@ -124,11 +124,13 @@
       job="/opt/vecnet-discovery/current/script/harvest-cron-job.sh dl 1>/dev/null 2>&1"
 
 # this runs once a day
+# add the job, but comment it out since the target CI server appears to be gone
 - name: install CI harvest cron job
   cron: >
       name="discovery ci harvest"
       user=app
       state=present
+      disabled=yes
       hour=0
       minute=30
       job="/opt/vecnet-discovery/current/script/harvest-cron-job.sh ci"
