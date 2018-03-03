@@ -16,6 +16,10 @@ server {
     server_name {{ site_fqdn }};
 
 {% if ssl_cert_path %}
+    location ^~ /.well-known/acme-challenge/ {
+        alias /var/run/acme/acme-challenge/;
+    }
+
     location / {
         return 301 https://{{ site_fqdn }}$request_uri;
     }
@@ -23,8 +27,8 @@ server {
 server {
     listen 443 ssl default_server deferred;
     server_name          {{ site_fqdn }};
-    ssl_certificate      {{ ssl_cert_path }};
-    ssl_certificate_key  {{ ssl_key_path }};
+    ssl_certificate      /var/lib/acme/live/{{ site_fqdn }}/fullchain;
+    ssl_certificate_key  /var/lib/acme/live/{{ site_fqdn }}/privkey;
     ssl_session_cache    shared:SSL:1m;
     ssl_session_timeout  10m;
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";

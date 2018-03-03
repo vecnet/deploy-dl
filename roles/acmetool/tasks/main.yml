@@ -1,0 +1,32 @@
+---
+# There is a little bit of a chicken-egg situtaion since
+# acmetool needs nginx to serve the challenge file, but nginx needs
+# the keys to load the ssl configuration. Some manual intervention might
+# be needed for initial set-up
+#
+# sudo acmetool 
+#
+- name: add acmetool repo file
+  template: >
+    src=acmetool.repo.j2
+    dest=/etc/yum.repos.d/acmetool.repo
+    owner=root
+    group=root
+
+- name: install acmetool
+  yum: name=acmetool
+
+- name: make well-known directory
+  file: >
+    path=/var/run/acme/acme-challenge/
+    owner=root
+    group=root
+    mode=755
+    state=directory
+
+- name: add cron job
+  template: >
+    src=acmetool.j2
+    path=/etc/cron.d/acmetool
+    owner=root
+    group=root
